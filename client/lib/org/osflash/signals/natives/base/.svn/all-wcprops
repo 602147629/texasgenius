@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/base
+END
+SignalShape.as
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/base/SignalShape.as
+END
+SignalTimer.as
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/base/SignalTimer.as
+END
+SignalSprite.as
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/base/SignalSprite.as
+END
+SignalMovieClip.as
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/base/SignalMovieClip.as
+END
+SignalSocket.as
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/base/SignalSocket.as
+END
+SignalTextField.as
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/base/SignalTextField.as
+END
+SignalURLLoader.as
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/base/SignalURLLoader.as
+END
+SignalXMLSocket.as
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/base/SignalXMLSocket.as
+END
+SignalBitmap.as
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/base/SignalBitmap.as
+END

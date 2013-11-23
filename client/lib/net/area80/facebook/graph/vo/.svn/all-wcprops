@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/AREA80LIBRARY/!svn/ver/52/as3/Area80AS3Library/trunk/src/net/area80/facebook/graph/vo
+END
+FBFriend.as
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/AREA80LIBRARY/!svn/ver/52/as3/Area80AS3Library/trunk/src/net/area80/facebook/graph/vo/FBFriend.as
+END
+FBError.as
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/AREA80LIBRARY/!svn/ver/52/as3/Area80AS3Library/trunk/src/net/area80/facebook/graph/vo/FBError.as
+END
+FBFriendListData.as
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/AREA80LIBRARY/!svn/ver/52/as3/Area80AS3Library/trunk/src/net/area80/facebook/graph/vo/FBFriendListData.as
+END
+FBResponse.as
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/AREA80LIBRARY/!svn/ver/52/as3/Area80AS3Library/trunk/src/net/area80/facebook/graph/vo/FBResponse.as
+END

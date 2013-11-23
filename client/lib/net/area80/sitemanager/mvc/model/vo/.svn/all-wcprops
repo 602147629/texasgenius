@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/AREA80LIBRARY/!svn/ver/1/as3/Area80AS3Library/trunk/src/net/area80/sitemanager/mvc/model/vo
+END
+AlertMessageVO.as
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/AREA80LIBRARY/!svn/ver/1/as3/Area80AS3Library/trunk/src/net/area80/sitemanager/mvc/model/vo/AlertMessageVO.as
+END
+PagePluginConfig.as
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/AREA80LIBRARY/!svn/ver/1/as3/Area80AS3Library/trunk/src/net/area80/sitemanager/mvc/model/vo/PagePluginConfig.as
+END
+ConfirmMessageVO.as
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/AREA80LIBRARY/!svn/ver/1/as3/Area80AS3Library/trunk/src/net/area80/sitemanager/mvc/model/vo/ConfirmMessageVO.as
+END
+SWFAddressPagePluginConfig.as
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/AREA80LIBRARY/!svn/ver/1/as3/Area80AS3Library/trunk/src/net/area80/sitemanager/mvc/model/vo/SWFAddressPagePluginConfig.as
+END

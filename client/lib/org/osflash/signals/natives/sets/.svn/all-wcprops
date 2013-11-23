@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets
+END
+StageSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/StageSignalSet.as
+END
+MicrophoneSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/MicrophoneSignalSet.as
+END
+InteractiveObjectSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/InteractiveObjectSignalSet.as
+END
+NetConnectionSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/NetConnectionSignalSet.as
+END
+XMLSocketSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/XMLSocketSignalSet.as
+END
+URLStreamSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/URLStreamSignalSet.as
+END
+TimerSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/TimerSignalSet.as
+END
+SoundChannelSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/SoundChannelSignalSet.as
+END
+LoaderInfoSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/LoaderInfoSignalSet.as
+END
+NativeSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/NativeSignalSet.as
+END
+TextFieldSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/TextFieldSignalSet.as
+END
+SoundSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/SoundSignalSet.as
+END
+SocketSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/SocketSignalSet.as
+END
+EventDispatcherSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/EventDispatcherSignalSet.as
+END
+URLLoaderSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/URLLoaderSignalSet.as
+END
+FileReferenceListSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/FileReferenceListSignalSet.as
+END
+DisplayObjectSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/DisplayObjectSignalSet.as
+END
+SharedObjectSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/SharedObjectSignalSet.as
+END
+FileReferenceSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/FileReferenceSignalSet.as
+END
+NetStreamSignalSet.as
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/natives/sets/NetStreamSignalSet.as
+END

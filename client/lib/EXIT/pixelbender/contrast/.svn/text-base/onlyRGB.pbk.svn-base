@@ -1,0 +1,44 @@
+<languageVersion : 1.0;>
+
+kernel contrast
+<   namespace : "EXITLab";
+    vendor : "EXIT";
+    version : 1;
+>
+{
+    input image4 src;
+    output pixel4 dst;
+
+    parameter float contrast
+    <
+        minValue : 0.0;
+        maxValue : 1.0;
+        defaultValue : 0.0;
+    >;
+    
+    void
+    evaluatePixel()
+    {
+        dst = sampleNearest(src,outCoord());
+        float defalutRGB = (dst.r+dst.g+dst.b)*0.33333;
+        if( dst.r > defalutRGB ){
+            dst.r = dst.r+contrast;
+        }else{
+            dst.r = dst.r-contrast;
+        }
+        
+        if( dst.g > defalutRGB ){
+            dst.g = dst.g+contrast;
+        }else{
+            dst.g = dst.g-contrast;
+        }
+        
+        if( dst.b > defalutRGB ){
+            dst.b = dst.b+contrast;
+        }else{
+            dst.b = dst.b-contrast;
+        }
+       
+        //dst.rgb = dst.rgb*contrast;//(dst*0.5) + (dst*0.5*contrast);
+    }
+}

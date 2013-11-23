@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals
+END
+Signal.as
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/Signal.as
+END
+SlotList.as
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/SlotList.as
+END
+Promise.as
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/Promise.as
+END
+PrioritySignal.as
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/PrioritySignal.as
+END
+Slot.as
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/Slot.as
+END
+OnceSignal.as
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/OnceSignal.as
+END
+DeluxeSignal.as
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/DeluxeSignal.as
+END
+ISignal.as
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/ISignal.as
+END
+MonoSignal.as
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/MonoSignal.as
+END
+IPrioritySignal.as
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/IPrioritySignal.as
+END
+ISlot.as
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/ISlot.as
+END
+IOnceSignal.as
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/AREA80LIBRARY/!svn/ver/151/as3/Area80AS3Library/trunk/src/org/osflash/signals/IOnceSignal.as
+END

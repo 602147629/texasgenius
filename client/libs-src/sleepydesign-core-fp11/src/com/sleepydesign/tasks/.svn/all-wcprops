@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/qkids/!svn/ver/8/dev/trunk/libs-src/sleepydesign-core-fp11/src/com/sleepydesign/tasks
+END
+TaskManager.as
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/qkids/!svn/ver/8/dev/trunk/libs-src/sleepydesign-core-fp11/src/com/sleepydesign/tasks/TaskManager.as
+END
+Task.as
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/qkids/!svn/ver/8/dev/trunk/libs-src/sleepydesign-core-fp11/src/com/sleepydesign/tasks/Task.as
+END
+ITask.as
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/qkids/!svn/ver/8/dev/trunk/libs-src/sleepydesign-core-fp11/src/com/sleepydesign/tasks/ITask.as
+END

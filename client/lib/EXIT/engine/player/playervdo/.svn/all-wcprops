@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/exittest/!svn/ver/57/trunk/EXITlib/v1/src/EXIT/engine/player/playervdo
+END
+IPlayerVdo.as
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/exittest/!svn/ver/46/trunk/EXITlib/v1/src/EXIT/engine/player/playervdo/IPlayerVdo.as
+END
+PlayerVdoEvent.as
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/exittest/!svn/ver/46/trunk/EXITlib/v1/src/EXIT/engine/player/playervdo/PlayerVdoEvent.as
+END
+YoutubePlayer.as
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/exittest/!svn/ver/46/trunk/EXITlib/v1/src/EXIT/engine/player/playervdo/YoutubePlayer.as
+END
+VdoNetStream.as
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/exittest/!svn/ver/57/trunk/EXITlib/v1/src/EXIT/engine/player/playervdo/VdoNetStream.as
+END

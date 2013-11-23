@@ -1,0 +1,48 @@
+<languageVersion : 1.0;>
+
+kernel positionscale
+<   namespace : "EXITLab";
+    vendor : "EXIT";
+    version : 1;
+>
+{
+    input image4 src;
+    output pixel4 dst;
+    
+    parameter float scaleX
+    <
+        minValue : -10.0;
+        maxValue : 10.0;
+        defaultValue : 1.0;
+    >;
+    
+    parameter float scaleY
+    <
+        minValue : -10.0;
+        maxValue : 10.0;
+        defaultValue : 1.0;
+    >;
+    
+    parameter float x
+    <
+        minValue : -2000.0;
+        maxValue : 2000.0;
+        defaultValue : 0.0;
+    >;
+    
+    parameter float y
+    <
+        minValue : -2000.0;
+        maxValue : 2000.0;
+        defaultValue : 0.0;
+    >;
+
+    void
+    evaluatePixel()
+    {
+        float2 coord = outCoord();
+        float newX = x+coord.x/scaleX;
+        float newY = y+coord.y/scaleY;
+        dst = sampleNearest(src,float2(newX,newY));
+    }
+}

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/AREA80LIBRARY/!svn/ver/1/as3/Area80AS3Library/trunk/src/net/area80/component/composer/transition
+END
+NoTransition.as
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/AREA80LIBRARY/!svn/ver/1/as3/Area80AS3Library/trunk/src/net/area80/component/composer/transition/NoTransition.as
+END
+InOutTransition.as
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/AREA80LIBRARY/!svn/ver/1/as3/Area80AS3Library/trunk/src/net/area80/component/composer/transition/InOutTransition.as
+END
+Transition.as
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/AREA80LIBRARY/!svn/ver/1/as3/Area80AS3Library/trunk/src/net/area80/component/composer/transition/Transition.as
+END
