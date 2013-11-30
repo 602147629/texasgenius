@@ -43,7 +43,7 @@ package
 		*/
 		
 		// Connection constants
-		private const SERVER_IP:String = "198.57.254.131";//"192.168.0.13";//// "203.170.193.44";
+		private const SERVER_IP:String = "192.168.0.13";// "198.57.254.131";//"192.168.0.13";//// "203.170.193.44";
 		private const SERVER_PORT:int = 9933;//9339;//
 		private const DEFAULT_ZONE:String = "BasicExamples";
 		private const LOBBEY_ROOM:String = "The Lobby";
