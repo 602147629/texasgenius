@@ -2,8 +2,10 @@ package module.roompage
 {
 	import com.smartfoxserver.v2.entities.Room;
 	
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+
 	
 	import EXIT.util.JSONLoader;
 	
@@ -39,6 +41,7 @@ package module.roompage
 			MainModel.getInstance().freeze();
 			
 			//menu
+			
 			var menuController:MenuController = new MenuController(this);
 			
 			serverConnector = ServerConnector.getInstace();
@@ -55,16 +58,41 @@ package module.roompage
 			createRoomBtn.buttonMode=true;
 			createRoomBtn.addEventListener(MouseEvent.CLICK , onCreateRoom );
 			
+			createRoomBtn.addEventListener(MouseEvent.MOUSE_OUT , function onOut(e:MouseEvent):void{
+				var _mc:MovieClip = e.currentTarget as MovieClip
+				_mc.gotoAndStop(e.type);
+			})
+			createRoomBtn.addEventListener(MouseEvent.MOUSE_OVER , function onOver(e:MouseEvent):void{
+				var _mc:MovieClip = e.currentTarget as MovieClip
+				_mc.gotoAndStop(e.type);
+			})
 			
-			var roomBtns:Vector.<Sprite> = new <Sprite>[normalRoomBtn,lnwRoomBtn,zone2,zone3,zone4,zone5,zone6 ];
+			var roomBtns:Vector.<Sprite> = new <Sprite>[normalRoomBtn,lnwRoomBtn,roomBtn1,roomBtn2,roomBtn3,roomBtn4,roomBtn5];
 			for( var i:int=0 ; i<=roomBtns.length-1 ; i++ ){
 				roomBtns[i].buttonMode = true;
 				roomBtns[i].addEventListener(MouseEvent.CLICK,changeZone );
+				roomBtns[i].addEventListener(MouseEvent.MOUSE_OVER, function onOver(e:MouseEvent):void{
+					var _mc:MovieClip = e.currentTarget as MovieClip
+					_mc.gotoAndStop(e.type);
+				})
+				roomBtns[i].addEventListener(MouseEvent.MOUSE_OUT, function onOut(e:MouseEvent):void{
+					var _mc:MovieClip = e.currentTarget as MovieClip
+					_mc.gotoAndStop(e.type);
+				})
 			}
 			
 			
 			joinGameBtn.buttonMode=true;
 			joinGameBtn.addEventListener(MouseEvent.CLICK , joinGame );
+			
+			joinGameBtn.addEventListener(MouseEvent.MOUSE_OUT , function onOut(e:MouseEvent):void{
+				var _mc:MovieClip = e.currentTarget as MovieClip
+				_mc.gotoAndStop(e.type);
+			})
+			joinGameBtn.addEventListener(MouseEvent.MOUSE_OVER , function onOver(e:MouseEvent):void{
+				var _mc:MovieClip = e.currentTarget as MovieClip
+				_mc.gotoAndStop(e.type);
+			})
 			joinGameSpectatorBtn.buttonMode=true;
 			joinGameSpectatorBtn.addEventListener(MouseEvent.CLICK , startAsSpectator );
 			
@@ -81,7 +109,7 @@ package module.roompage
 			var userGameController:UserGameController = new UserGameController(gangBtn,socialBtn,gangContainer,socialContainer);
 			
 		}
-		
+
 		private function getUserData(_json:*):void
 		{
 			userNameText.text = _json.name;
@@ -123,15 +151,15 @@ package module.roompage
 					zone = "BasicExamples";
 				}else if( currentZone == lnwRoomBtn ){
 					zone = "Zone1";
-				}else if( currentZone == zone2 ){
+				}else if( currentZone == roomBtn1 ){
 					zone = "Zone2";
-				}else if( currentZone == zone3 ){
+				}else if( currentZone == roomBtn2 ){
 					zone = "Zone3";
-				}else if( currentZone == zone4 ){
+				}else if( currentZone == roomBtn3 ){
 					zone = "Zone4";
-				}else if( currentZone == zone5 ){
+				}else if( currentZone == roomBtn4 ){
 					zone = "Zone5";
-				}else if( currentZone == zone6 ){
+				}else if( currentZone == roomBtn5 ){
 					zone = "Zone6";
 				}
 				serverConnector.changeZone(zone);
