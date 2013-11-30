@@ -4,7 +4,6 @@ package module.gamepage
 	import com.smartfoxserver.v2.entities.User;
 	import com.smartfoxserver.v2.entities.data.ISFSObject;
 	import com.smartfoxserver.v2.entities.data.SFSObject;
-	import com.smartfoxserver.v2.requests.ExtensionRequest;
 	import com.smartfoxserver.v2.requests.PublicMessageRequest;
 	
 	import flash.display.DisplayObject;
@@ -14,7 +13,6 @@ package module.gamepage
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.ui.Keyboard;
-	import flash.utils.setTimeout;
 	
 	import module.IPage;
 	
@@ -45,7 +43,6 @@ package module.gamepage
 			serverConnector.smartFoxClient.addEventListener(SFSEvent.USER_EXIT_ROOM, onUserExitRoom );
 			serverConnector.smartFoxClient.addEventListener(SFSEvent.USER_ENTER_ROOM , onUserEnterRoom );
 			serverConnector.smartFoxClient.addEventListener(SFSEvent.PUBLIC_MESSAGE , onPublicMessage );
-			serverConnector.smartFoxClient.addEventListener(SFSEvent.EXTENSION_RESPONSE, onExtensionResponse);
 			/*
 			
 			
@@ -85,15 +82,6 @@ package module.gamepage
 			loader.load( new URLRequest("slot.swf") );
 			addChild(loader);*/
 			addChild( new SlotMachineComponent() );
-			
-			setTimeout( function():void
-			{
-				var obj:SFSObject = new SFSObject();
-				obj.putInt("m1",4);
-				obj.putInt("m2",5);
-				var extRequest:ExtensionRequest = new ExtensionRequest("math",obj,serverConnector.smartFoxClient.lastJoinedRoom);
-				serverConnector.smartFoxClient.send(extRequest);
-			},1000);
 		}
 		
 		protected function sendMsgByKeyboard(event:KeyboardEvent):void
@@ -213,26 +201,6 @@ package module.gamepage
 				colorString = "#00ffff";
 			}
 			return colorString;
-		}
-		
-		
-		
-		
-		
-		
-		
-		public function onExtensionResponse(evt:SFSEvent):void
-		{
-			var params:ISFSObject = evt.params.params
-			var cmd:String = evt.params.cmd
-			trace(" cmd : "+cmd);
-			switch(cmd)
-			{
-				case "math" :
-					trace(" sum="+params.getInt("sum"));
-					break;
-					
-			}
 		}
 	}
 }
