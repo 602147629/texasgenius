@@ -15,7 +15,7 @@ import com.smartfoxserver.v2.entities.data.SFSObject;
 
 public class TurnController {
 	final private int TIME_OUT_DISTRIBUTE_CARD = 5; 
-	final private int TIME_OUT_TURN = 3; 
+	final private int TIME_OUT_TURN = 10; 
 	final private int MAX_CARD_TURN = 3; 
 	
 	public Signal signalEnd = new Signal();

@@ -10,7 +10,8 @@ public class UserSitEvent extends BaseClientRequestHandler {
 	public void handleClientRequest(User user, ISFSObject params)
 	{
 		TexasExtension gameExt = (TexasExtension) getParentExtension();
-		gameExt.addUser(user,params.getInt(ExternalConst.SIT_POSITION) , 
+		gameExt.addUser(user,
+				params.getInt(ExternalConst.SIT_POSITION) , 
 				params.getUtfString(ExternalConst.FB_UID) ,
 				params.getUtfString(ExternalConst.PLAYER_STATUS));
 		

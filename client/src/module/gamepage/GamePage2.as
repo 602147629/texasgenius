@@ -39,10 +39,10 @@ package module.gamepage
 		{
 			// button
 			var seat1:TextField = createText("1",function():void{
-				gameConnector.sit(1,"12344"," { \"status\":\"123\"}");
+				gameConnector.sit(0,"12344"," { \"status\":\"123\"}");
 			});
 			var seat2:TextField = createText("2",function():void{
-				gameConnector.sit(2,"445434"," { \"status\":\"265\"}");
+				gameConnector.sit(1,"445434"," { \"status\":\"265\"}");
 			});
 			var seat3:TextField = createText("3",function():void{
 				gameConnector.sit(2,"13343"," { \"status\":\"335\"}");
@@ -70,8 +70,8 @@ package module.gamepage
 			gameConnector.signalStartWithConfig.add( function(_config:String):void{
 				trace(" start with config : "+_config);
 			});
-			gameConnector.signalStartUserTurn.add( function(_userId:int):void{
-				trace(" start user turn ... userid="+_userId);
+			gameConnector.signalStartUserTurn.add( function(sitPosition:int):void{
+				trace(" start user turn ... sitPosition="+sitPosition);
 			});
 			gameConnector.signalUserDeal.add(function(value:int , sitPosition:int , turn:int):void
 			{

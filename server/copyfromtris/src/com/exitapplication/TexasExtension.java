@@ -86,16 +86,17 @@ public class TexasExtension extends SFSExtension
 		}
 		trace(" add user id : "+user.getId()+" user name : "+user.getName() );
 		
-		trace("userSeatDatas[sitIndex]:"+ (userSeatDatas[sitIndex]==null) );
+		trace("userSeatDatas["+sitIndex+"]:"+ (userSeatDatas[sitIndex]==null) );
 		if( userSeatDatas[sitIndex]!=null ){
 			SFSObject sfsObject = new SFSObject();
 			sfsObject.putUtfString(ExternalConst.REASON, "Your seat has reserved.");
 			send(ExternalConst.ON_SIT_ERROR, sfsObject, user);
 			return;
 		}
-		
+		trace("aa");
 		userSeatDatas[sitIndex] = new UserSeatData(user, fbuid , sitIndex , playerStatus);
 		numUserSeated++;
+		trace("numUserSeated:"+numUserSeated);
 		
 		traceUserSeat();
 		
@@ -106,6 +107,7 @@ public class TexasExtension extends SFSExtension
 		sfsObj.putUtfString(ExternalConst.PLAYER_STATUS, userSeatDatas[sitIndex].playerStatus);
 		send(ExternalConst.ON_SIT_COMPLETE, sfsObj, getParentRoom().getUserList());
 		
+		trace("currentState:"+currentState);
 		if( currentState==WAIT_PLAYER_STATE && numUserSeated>=2 ){
 			startLoadConfig();
 		}
