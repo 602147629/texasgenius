@@ -3,10 +3,12 @@ package
 	import com.smartfoxserver.v2.SmartFox;
 	import com.smartfoxserver.v2.core.SFSEvent;
 	import com.smartfoxserver.v2.entities.Room;
+	import com.smartfoxserver.v2.entities.User;
 	import com.smartfoxserver.v2.requests.CreateRoomRequest;
 	import com.smartfoxserver.v2.requests.JoinRoomRequest;
 	import com.smartfoxserver.v2.requests.LoginRequest;
 	import com.smartfoxserver.v2.requests.LogoutRequest;
+	import com.smartfoxserver.v2.requests.RoomExtension;
 	import com.smartfoxserver.v2.requests.game.SFSGameSettings;
 	import com.smartfoxserver.v2.util.ConfigData;
 	
@@ -45,11 +47,14 @@ package
 		// Connection constants
 		private const SERVER_IP:String = "192.168.0.13";// "198.57.254.131";//"192.168.0.13";//// "203.170.193.44";
 		private const SERVER_PORT:int = 9933;//9339;//
-		private const DEFAULT_ZONE:String = "BasicExamples";
-		private const LOBBEY_ROOM:String = "The Lobby";
+		private const LOBBY_ROOM:String = "The Lobby";
 		private const GAME_ROOMS_GROUP_NAME:String = "default";
-		private const EXTENSION_ID:String = "tris";
-		private const EXTENSIONS_CLASS:String = "sfs2x.extensions.games.tris.TrisExtension";
+//		private const DEFAULT_ZONE:String = "z3";
+//		private const EXTENSION_ID:String = "MyExt";
+//		private const EXTENSIONS_CLASS:String = "com.exitapplication.MyExtension";
+		private const DEFAULT_ZONE:String = "BasicExamples";
+		private const EXTENSION_ID:String = "texas";//"tris";
+		private const EXTENSIONS_CLASS:String = "com.exitapplication.TexasExtension";//"sfs2x.extensions.games.tris.TrisExtension";
 		
 		private var sfs:SmartFox;
 		private var roomListEvent:SFSEvent;
@@ -58,6 +63,9 @@ package
 		private static var _instance:ServerConnector;
 
 		private var configData:ConfigData;
+		
+		private var waitingJoinRoomName:String = "";
+		
 		public function ServerConnector()
 		{
 			if( _instance ){
@@ -155,7 +163,7 @@ package
 			Shows.addByClass(this,"sfs.roomManager.containsGroup(GAME_ROOMS_GROUP_NAME) : "+sfs.roomManager.containsGroup(GAME_ROOMS_GROUP_NAME));
 			/*if (!sfs.roomManager.containsGroup(GAME_ROOMS_GROUP_NAME))
 				sfs.send(new SubscribeRoomGroupRequest(GAME_ROOMS_GROUP_NAME));*/
-			sfs.send( new JoinRoomRequest(LOBBEY_ROOM) );
+			sfs.send( new JoinRoomRequest(LOBBY_ROOM) );
 		}
 		
 		
@@ -186,26 +194,30 @@ package
 			settings.groupId = GAME_ROOMS_GROUP_NAME;
 //			settings.password = createGamePanel.ti_password.text;
 			settings.isGame = true;
-			settings.maxUsers = 5;
-//			settings.maxSpectators = createGamePanel.ns_maxSpectators.value;
+			settings.maxUsers = 20;
+			settings.maxSpectators = 10;
 			
-			//settings.extension = new RoomExtension(EXTENSION_ID, EXTENSIONS_CLASS);
+			settings.extension = new RoomExtension(EXTENSION_ID, EXTENSIONS_CLASS);
 			
+			waitingJoinRoomName = _name;	
 			// Create room
-			var request:CreateRoomRequest = new CreateRoomRequest(settings, true, sfs.lastJoinedRoom);
+			var request:CreateRoomRequest = new CreateRoomRequest(settings, false, sfs.lastJoinedRoom);
 			sfs.send(request);
 		}
 		
-		public function join(_id:int , _asSpect:Boolean):void
+		public function join(_id:int ):void
 		{
-			var request:JoinRoomRequest = new JoinRoomRequest(_id, null, sfs.lastJoinedRoom.id , _asSpect );
+			var request:JoinRoomRequest = new JoinRoomRequest(_id, null, sfs.lastJoinedRoom.id , true );
 			sfs.send(request);
 		}
 		
 		protected function onRoomJoin(event:SFSEvent):void
 		{
 			_currentRoom = event.params.room;
-			Shows.addByClass(this,"onRoomJoin");
+			
+			var updatedUser:User = sfs.mySelf;
+			Shows.addByClass(this,"onRoomJoin isSpectator : "+updatedUser.isSpectator);
+			
 			SIGNAL_ROOM_JOIN.dispatch(_currentRoom);
 			updateRoomList();
 		}
@@ -222,6 +234,11 @@ package
 //			var label:String = room.() + " (" + room.getUserCount() + "/" + room.getMaxUsers() + ")";
 			Shows.addByClass(this," ___ [onRoomAdded]"+room.groupId+" , "+room.name+" , "+room.userCount+" , "+room.maxUsers);
 			updateRoomList();
+			
+			if( room.name == waitingJoinRoomName ){
+				waitingJoinRoomName="";
+				join(room.id);
+			}
 		}
 		
 		protected function onRoomRemoved(event:SFSEvent):void

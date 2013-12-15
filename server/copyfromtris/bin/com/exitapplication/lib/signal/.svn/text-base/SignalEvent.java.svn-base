@@ -1,0 +1,8 @@
+package net.area80.drivetrack.util.signal;
+
+public class SignalEvent extends Object{
+	public void dispatch(Object...args)
+	{
+		
+	}
+}

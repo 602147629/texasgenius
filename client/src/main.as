@@ -7,7 +7,7 @@ package
 	import model.MainModel;
 	
 	import module.IPage;
-	import module.gamepage.GamePage;
+	import module.gamepage.GamePage2;
 	import module.roompage.RoomPage;
 	
 	import net.area80.utils.DrawingUtils;
@@ -56,7 +56,7 @@ package
 				currentPageSprite.start();
 				pageLayer.addChild( Sprite(currentPageSprite) );
 			}else if( _page == MainModel.PAGE_GAME ){
-				currentPageSprite = new GamePage();
+				currentPageSprite = new GamePage2();
 				currentPageSprite.start();
 				pageLayer.addChild( Sprite(currentPageSprite) );
 			}

@@ -129,7 +129,7 @@ package module.roompage
 		{
 			if( roomController.getSelectedRoomID()!=-1 ){
 				MainModel.getInstance().freeze();
-				serverConnector.join(roomController.getSelectedRoomID(),true);
+				serverConnector.join(roomController.getSelectedRoomID());
 			}
 		}
 		
@@ -138,7 +138,7 @@ package module.roompage
 			Shows.addByClass(this," room id="+ roomController.getSelectedRoomID() );
 			if( roomController.getSelectedRoomID()!=-1 ){
 				MainModel.getInstance().freeze();
-				serverConnector.join(roomController.getSelectedRoomID(),false);
+				serverConnector.join(roomController.getSelectedRoomID());
 			}
 		}
 		

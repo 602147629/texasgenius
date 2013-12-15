@@ -15,7 +15,8 @@ public class MathHandler extends BaseClientRequestHandler {
 		ISFSObject rtn = new SFSObject();
 		rtn.putInt("sum",m1+m2);
 		
-		MyExt parentExt = (MyExt) getParentExtension();
+//		trace(" handleClientRequest... ");
+		MyExtension parentExt = (MyExtension) getParentExtension();
 		parentExt.send("math", rtn, player);
 		
 	}

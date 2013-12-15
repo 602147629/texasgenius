@@ -14,6 +14,7 @@ package module.gamepage
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
 	import flash.ui.Keyboard;
+	import flash.utils.setInterval;
 	import flash.utils.setTimeout;
 	
 	import module.IPage;
@@ -88,11 +89,20 @@ package module.gamepage
 			
 			setTimeout( function():void
 			{
-				var obj:SFSObject = new SFSObject();
-				obj.putInt("m1",4);
-				obj.putInt("m2",5);
-				var extRequest:ExtensionRequest = new ExtensionRequest("math",obj,serverConnector.smartFoxClient.lastJoinedRoom);
-				serverConnector.smartFoxClient.send(extRequest);
+				var sfso:ISFSObject = new SFSObject();
+				sfso.putUtfString("data",'{'+
+									   '"id": "547822084",'+
+									   '"name": "Ekkasit Exit Pinyoanuntapong",'+
+									   '"first_name": "Ekkasit",'+
+									   '"middle_name": "Exit",'+
+									   '"last_name": "Pinyoanuntapong",'+
+									   '"username": "exit.pinyoanuntapong",'+
+									   '"gender": "male",'+
+									   '"locale": "en_US"'+
+									'}');
+				serverConnector.smartFoxClient.send( new ExtensionRequest("test", sfso, serverConnector.smartFoxClient.lastJoinedRoom) );
+				
+				Shows.addByClass(this," send math ext... ");
 			},1000);
 		}
 		
@@ -225,13 +235,17 @@ package module.gamepage
 		{
 			var params:ISFSObject = evt.params.params
 			var cmd:String = evt.params.cmd
-			trace(" cmd : "+cmd);
 			switch(cmd)
 			{
 				case "math" :
 					trace(" sum="+params.getInt("sum"));
 					break;
-					
+				case "trace" :
+					trace(" trace : "+params.getUtfString("t"));
+					break;
+				case "test" :
+					trace(" test : v="+params.getUtfString("t")+" ... "+params.getUtfString("data"));
+					break;
 			}
 		}
 	}

@@ -13,7 +13,7 @@
 	<zone>BasicExamples</zone>
 	<!-- End Mandatory Settings -->
 	
-	<debug>true</debug>
+	<debug>false</debug>
 	
 	<httpPort>8080</httpPort>
 	<useBlueBox>true</useBlueBox>
