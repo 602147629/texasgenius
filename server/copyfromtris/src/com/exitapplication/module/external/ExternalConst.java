@@ -21,6 +21,8 @@ public class ExternalConst {
 	
 	//client var
 	public final static String SIT_POSITION = "sitposition";
+	public final static String PLAYER_STATUS = "playerstatus";
+	public final static String FB_UID = "fbuid";
 	public final static String USER_ID = "userid";
 	public final static String CONFIG_DATA = "configdata";
 	public final static String REASON = "reason";

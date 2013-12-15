@@ -9,6 +9,8 @@ package
 	import com.smartfoxserver.v2.requests.PlayerToSpectatorRequest;
 	import com.smartfoxserver.v2.requests.SpectatorToPlayerRequest;
 	
+	import module.gamepage.PlayerSitData;
+	
 	import org.osflash.signals.Signal;
 	
 //http://www.smartfoxserver.com/forums/viewtopic.php?f=18&t=16204
@@ -17,9 +19,10 @@ package
 		/**
 		 * 1 int > userId who sit <br>
 		 * 2 int > sitPosition <br>
-		 * 3 Boolean > isMe
+		 * 4 String > playerstatus
+		 * 4 Boolean > isMe
 		 */		
-		public var signalSitComplete:Signal = new Signal(int,int,Boolean);
+		public var signalSitComplete:Signal = new Signal(PlayerSitData);
 		
 		/**
 		 * 1 String > error description 
@@ -37,13 +40,13 @@ package
 		 */		
 		public var signalStartWithConfig:Signal = new Signal(String);
 		/**
-		 * 1 String > Config that is loaded from server. 
+		 * 1 int > seat position
 		 */		
 		public var signalStartUserTurn:Signal = new Signal(int);
 		
 		/**
 		 * 1 int > deal value if 0 mean "หมอบ"<br>
-		 * 2 int > userID. <br>
+		 * 2 int > seat position. <br>
 		 * 3 int > turns
 		 */		
 		public var signalUserDeal:Signal = new Signal(int,int,int);
@@ -70,6 +73,8 @@ package
 		
 		//client var
 		private const SIT_POSITION:String = "sitposition";
+		private const PLAYER_STATUS:String = "playerstatus";
+		private const FB_UID:String = "fbuid";
 		private const USER_ID:String = "userid";
 		private const CONFIG_DATA:String = "configdata";
 		private const REASON:String = "reason";
@@ -78,6 +83,8 @@ package
 		
 		private var sfs:SmartFox;
 		private var sitPosition:int;
+		private var playerStatus:String;
+		private var fbuid:String;
 		
 		public function GameConnector(sfs:SmartFox)
 		{
@@ -95,9 +102,11 @@ package
 		 * SIT
 		 */		
 		
-		public function sit( _id:int ):void
+		public function sit( _sitPosition:int , _fbuid:String , _playerStatus:String ):void
 		{
-			sitPosition = _id;
+			sitPosition = _sitPosition;
+			fbuid = _fbuid;
+			playerStatus = _playerStatus;
 			sfs.send( new SpectatorToPlayerRequest(sfs.lastJoinedRoom) );
 		}
 		
@@ -108,6 +117,8 @@ package
 			if (updatedUser.isItMe){
 				var sfsObj:SFSObject = new SFSObject();
 				sfsObj.putInt(SIT_POSITION,sitPosition);
+				sfsObj.putUtfString(FB_UID,fbuid);
+				sfsObj.putUtfString(PLAYER_STATUS,playerStatus);
 				sfs.send( new ExtensionRequest( USER_SIT , sfsObj , sfs.lastJoinedRoom) );
 			}
 		}
@@ -158,6 +169,7 @@ package
 		{
 			var params:ISFSObject = evt.params.params
 			var cmd:String = evt.params.cmd
+			var sitPosition:int;
 			var userId:int;
 			switch(cmd)
 			{
@@ -166,8 +178,11 @@ package
 					break;
 				case ON_SIT_COMPLETE :
 					userId = params.getInt(USER_ID);
-					var sitPosition:int = params.getInt(SIT_POSITION);
-					signalSitComplete.dispatch(userId,sitPosition,sfs.mySelf.id==userId);
+					var fbuid:String = params.getUtfString(FB_UID);
+					sitPosition = params.getInt(SIT_POSITION);
+					var playerStatus:String = params.getUtfString(PLAYER_STATUS);
+					var sitPlayerData:PlayerSitData = new PlayerSitData( userId , fbuid , sitPosition , playerStatus , sfs.mySelf.id==userId );
+					signalSitComplete.dispatch(sitPlayerData);
 				break;
 				case ON_SIT_ERROR :
 					signalSitError.dispatch(params.getUtfString(REASON));
@@ -176,14 +191,14 @@ package
 					signalStartWithConfig.dispatch(params.getUtfString(CONFIG_DATA));
 				break;
 				case START_USER_TURN :
-					userId = params.getInt(USER_ID);
-					signalStartUserTurn.dispatch(userId);
+					sitPosition = params.getInt(SIT_POSITION);
+					signalStartUserTurn.dispatch(sitPosition);
 				break;
 				case PROVIDE_CONFIG :
 					//signalStartWithConfig.dispatch(params.getUtfString(CONFIG_DATA));
 				break;
 				case USER_DEAL :
-					signalUserDeal.dispatch( params.getInt(VALUE) , params.getInt(USER_ID) , params.getInt(TURN) );
+					signalUserDeal.dispatch( params.getInt(VALUE) , params.getInt(SIT_POSITION) , params.getInt(TURN) );
 				break;
 				case END_TURN :
 					signalEndTurn.dispatch();

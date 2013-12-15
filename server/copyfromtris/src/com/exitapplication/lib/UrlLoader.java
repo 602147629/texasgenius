@@ -16,11 +16,9 @@ public class UrlLoader {
 	public Signal signalError = new Signal();
 	
 	private ArrayList<Param> params = new ArrayList<Param>();
-	private TexasExtension texasExtension;
 	
-	public UrlLoader(TexasExtension texasExtension)
+	public UrlLoader()
 	{
-		this.texasExtension = texasExtension;
 	}
 	
 	public void load(String urlString)
@@ -33,7 +31,6 @@ public class UrlLoader {
 			}
 		}
 		
-		texasExtension.trace(" load urlParameters:"+urlParameters);
 		 params = new ArrayList<Param>();
 		 
 		 HttpURLConnection connection = null;  
@@ -81,9 +78,7 @@ public class UrlLoader {
 
 	public void addParam(String _name , String _value ) 
 	{
-		texasExtension.trace("b4="+_name+","+_value);
 		params.add(new Param(_name, _value));
-		texasExtension.trace("after");
 	}
 	
 	private class Param
@@ -95,5 +90,10 @@ public class UrlLoader {
 			name = _name;
 			value = _value;
 		}
+	}
+
+	public void dispose() {
+		signalComplete.removeAll();
+		signalError.removeAll();
 	}
 }

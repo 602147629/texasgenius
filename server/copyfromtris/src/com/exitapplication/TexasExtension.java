@@ -26,7 +26,7 @@ public class TexasExtension extends SFSExtension
 	
 	private String currentState = WAIT_PLAYER_STATE;
 	
-	private UrlLoader urlLoaderStartGame = new UrlLoader(this);
+	private UrlLoader urlLoaderStartGame;
 	
 	//seat
 	private TurnController turnController = new TurnController(this);
@@ -64,27 +64,21 @@ public class TexasExtension extends SFSExtension
 		addEventHandler(SFSEventType.PLAYER_TO_SPECTATOR, OnUserOut.class);
 		
 		
-		urlLoaderStartGame.signalComplete.add(new SignalEvent(){
+		turnController.signalEnd.add( new SignalEvent(){
 			public void dispatch(Object...args)
 			{
-				configData = (String) args[0];
-				currentState = START_TURN_STATE;
-				trace("loaded config");
-				turnController.start( configData , userSeatDatas.clone() );
-			}
-		});
-		urlLoaderStartGame.signalError.add(new SignalEvent(){
-			public void dispatch(Object...args)
-			{
-				configData = (String) args[0];
-				currentState = START_TURN_STATE;
-				trace("error config : "+configData);
-				turnController.start( configData , userSeatDatas.clone() );
+				urlLoaderStartGame.dispose();
+				ArrayList<UserSeatData> playerArray = getUserSitDatas();
+				if( playerArray.size() >= 2 ){
+					startLoadConfig();
+				}else{
+					currentState = WAIT_PLAYER_STATE;
+				}
 			}
 		});
 	}
 	
-	public void addUser(User user , int sitIndex )
+	public void addUser(User user , int sitIndex , String fbuid ,  String playerStatus )
 	{
 		List<User> users = getParentRoom().getUserList();
 		for( int i=0 ; i<=users.size()-1 ; i++ ){
@@ -100,7 +94,7 @@ public class TexasExtension extends SFSExtension
 			return;
 		}
 		
-		userSeatDatas[sitIndex] = new UserSeatData(user, sitIndex);
+		userSeatDatas[sitIndex] = new UserSeatData(user, fbuid , sitIndex , playerStatus);
 		numUserSeated++;
 		
 		traceUserSeat();
@@ -108,7 +102,8 @@ public class TexasExtension extends SFSExtension
 		SFSObject sfsObj = new SFSObject();
 		sfsObj.putInt(ExternalConst.SIT_POSITION, sitIndex);
 		sfsObj.putInt(ExternalConst.USER_ID, user.getId());
-		sfsObj.putInt(ExternalConst.TURN, user.getId());
+		sfsObj.putUtfString(ExternalConst.FB_UID, fbuid);
+		sfsObj.putUtfString(ExternalConst.PLAYER_STATUS, userSeatDatas[sitIndex].playerStatus);
 		send(ExternalConst.ON_SIT_COMPLETE, sfsObj, getParentRoom().getUserList());
 		
 		if( currentState==WAIT_PLAYER_STATE && numUserSeated>=2 ){
@@ -132,6 +127,7 @@ public class TexasExtension extends SFSExtension
 		}
 		traceUserSeat();
 		numUserSeated--;
+		turnController.userOut(user);
 	}
 	
 	public void userDeal(int value , int userId )
@@ -141,22 +137,13 @@ public class TexasExtension extends SFSExtension
 	
 	private void startLoadConfig()
 	{
+		ArrayList<UserSeatData> playerArray = getUserSitDatas();
+		
+		if( playerArray.size()<2 ){
+			return;
+		}
 		trace("startLoadConfig()");
 		currentState = START_LOAD_CONFIG_STATE;
-		
-		
-//		URLLoader1 urlLoader = new URLLoader1();
-//		urlLoader.load2("http://texasgenius.com/phpsys/action.php", this);
-		
-		
-		urlLoaderStartGame.addParam("action_option","getCard");
-		
-		ArrayList<UserSeatData> playerArray = new ArrayList<UserSeatData>();
-		for( int i=0 ; i<=userSeatDatas.length-1 ; i++){
-			if( userSeatDatas[i] !=null ){
-				playerArray.add(userSeatDatas[i]);
-			}
-		}
 		
 		String nameString = "[";
 		for( int i=0 ; i<=playerArray.size()-1 ; i++ ){
@@ -172,13 +159,44 @@ public class TexasExtension extends SFSExtension
 		
 		
 		trace(" param load : "+nameString);
+		
+		urlLoaderStartGame = new UrlLoader();
+		urlLoaderStartGame.addParam("action_option","getCard");
 		urlLoaderStartGame.addParam("name",nameString);
 		
-		urlLoaderStartGame.load(ExternalConst.ALL_CARD_URL);
+		urlLoaderStartGame.signalComplete.add(new SignalEvent(){
+			public void dispatch(Object...args)
+			{
+				configData = (String) args[0];
+				currentState = START_TURN_STATE;
+				trace("loaded config");
+				turnController.start( configData , userSeatDatas.clone() );
+				urlLoaderStartGame.dispose();
+			}
+		});
+		urlLoaderStartGame.signalError.add(new SignalEvent(){
+			public void dispatch(Object...args)
+			{
+				configData = (String) args[0];
+				currentState = START_TURN_STATE;
+				trace("error config : "+configData);
+				turnController.start( configData , userSeatDatas.clone() );
+			}
+		});
 		
-//		urlLoader.load("http://texasgenius.com/phpsys/action.php?action_option=getCard&token=1&fbid=1&name=[\"eknimation\",\"akekapon\",\"ake\"]");
+		urlLoaderStartGame.load(ExternalConst.ALL_CARD_URL);
 	}
 	
+	private ArrayList<UserSeatData> getUserSitDatas()
+	{
+		ArrayList<UserSeatData> playerArray = new ArrayList<UserSeatData>();
+		for( int i=0 ; i<=userSeatDatas.length-1 ; i++){
+			if( userSeatDatas[i] !=null ){
+				playerArray.add(userSeatDatas[i]);
+			}
+		}
+		return playerArray;
+	}
 	
 	
 	

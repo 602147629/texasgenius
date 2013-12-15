@@ -5,6 +5,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import com.exitapplication.TexasExtension;
+import com.exitapplication.lib.signal.Signal;
 import com.exitapplication.module.data.UserSeatData;
 import com.exitapplication.module.external.ExternalConst;
 import com.smartfoxserver.v2.SmartFoxServer;
@@ -17,9 +18,11 @@ public class TurnController {
 	final private int TIME_OUT_TURN = 3; 
 	final private int MAX_CARD_TURN = 3; 
 	
+	public Signal signalEnd = new Signal();
+	
 	private TexasExtension texasExtension;
-	private ArrayList<UserSeatData> playerArray;
-	private ArrayList<UserSeatData> activePlayerArray;
+	private ArrayList<UserSeatData> playerArray = new ArrayList<UserSeatData>();
+	private ArrayList<UserSeatData> activePlayerArray = new ArrayList<UserSeatData>();
 	private int currentPlayerTurnIndex = 0;
 	private int currentCardTurn = 0;
 	
@@ -35,6 +38,9 @@ public class TurnController {
 	@SuppressWarnings("unchecked")
 	public void start(String configData, UserSeatData[] seatArray) 
 	{
+		currentCardTurn = 0;
+		currentPlayerTurnIndex = 0;
+		
 		SFSObject sfsObj = new SFSObject();
 		sfsObj.putUtfString(ExternalConst.CONFIG_DATA, configData);
 		texasExtension.send(ExternalConst.START_GAME_TURN, sfsObj, texasExtension.getParentRoom().getUserList());
@@ -63,11 +69,20 @@ public class TurnController {
 	{
 		for( int i=0 ; i<=activePlayerArray.size()-1 ; i++){
 			if( activePlayerArray.get(i).user.getId() == user.getId() ){
+				
+				activePlayerArray.get(i).isOut = true;
+				activePlayerArray.remove(i);
+				
+				
+				if( activePlayerArray.size() < 2){
+		    		endGame();
+		    		return;
+				}
+				
 				if(activePlayerArray.get(i).user.getId() == activePlayerArray.get(currentPlayerTurnIndex).user.getId() ){
 					gotoNextPlayer();
 				}
-				activePlayerArray.get(i).isOut = true;
-				activePlayerArray.remove(i);
+				break;
 			}
 		}
 	}
@@ -85,7 +100,7 @@ public class TurnController {
 		
 		ISFSObject resObj = new SFSObject();
 		resObj.putInt(ExternalConst.VALUE, _value );
-		resObj.putInt(ExternalConst.USER_ID, userId ); 
+		resObj.putInt(ExternalConst.SIT_POSITION, currentPlayerTurnIndex ); 
 		resObj.putInt(ExternalConst.TURN, currentCardTurn ); 
     	texasExtension.send(ExternalConst.USER_DEAL, resObj , texasExtension.getParentRoom().getUserList());
     	
@@ -128,12 +143,13 @@ public class TurnController {
 	private void endGame() {
 		taskHandle.cancel(true);
 		texasExtension.send(ExternalConst.END_TURN, new SFSObject() , texasExtension.getParentRoom().getUserList());
+		signalEnd.dispatch();
 	}
 
 	private void startCountTime()
 	{
 		ISFSObject resObj = new SFSObject();
-		resObj.putInt(ExternalConst.USER_ID, activePlayerArray.get(currentPlayerTurnIndex).user.getId() );
+		resObj.putInt(ExternalConst.SIT_POSITION, activePlayerArray.get(currentPlayerTurnIndex).position );
     	texasExtension.send(ExternalConst.START_USER_TURN, resObj , texasExtension.getParentRoom().getUserList());
 		
 		t = System.currentTimeMillis();

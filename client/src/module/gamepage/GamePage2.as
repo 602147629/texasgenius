@@ -39,15 +39,15 @@ package module.gamepage
 		{
 			// button
 			var seat1:TextField = createText("1",function():void{
-				gameConnector.sit(1);
+				gameConnector.sit(1,"12344"," { \"status\":\"123\"}");
 			});
 			var seat2:TextField = createText("2",function():void{
-				gameConnector.sit(2);
+				gameConnector.sit(2,"445434"," { \"status\":\"265\"}");
+			});
+			var seat3:TextField = createText("3",function():void{
+				gameConnector.sit(2,"13343"," { \"status\":\"335\"}");
 			});
 			var standup:TextField = createText("stand up",function():void{
-				gameConnector.signalStandUp.add(function(user:User):void{
-					
-				});
 				gameConnector.standUp();
 			});
 			var deal:TextField = createText("deal",function():void{
@@ -56,8 +56,8 @@ package module.gamepage
 			
 			
 			// signal callback
-			gameConnector.signalSitComplete.add(function( userId:int , positionId:int , isMe:Boolean ):void{
-				trace(" userId:"+userId+" sit at positionId:"+positionId + " isMe:"+isMe);
+			gameConnector.signalSitComplete.add(function( playerSitData:PlayerSitData ):void{
+				trace(" userId:"+playerSitData.userId+" fbuid:"+playerSitData.fbuid+" sit at positionId:"+playerSitData.sitPosition +" playerStatus:"+playerSitData.playerStatus+ " isMe:"+playerSitData.isMe);
 			});
 			gameConnector.signalSitError.add(function(reason:String):void{
 				trace(" sit error : "+reason);
@@ -73,13 +73,18 @@ package module.gamepage
 			gameConnector.signalStartUserTurn.add( function(_userId:int):void{
 				trace(" start user turn ... userid="+_userId);
 			});
-			gameConnector.signalUserDeal.add(function(value:int , userId:int , turn:int):void
+			gameConnector.signalUserDeal.add(function(value:int , sitPosition:int , turn:int):void
 			{
-				trace(" user deal : "+value+"  frome user : "+userId+" turn:"+turn);
+				trace(" user deal : "+value+"  frome user position : "+sitPosition+" turn:"+turn);
 			});
 			gameConnector.signalEndTurn.add(function():void
 			{
 				trace(" end turn");
+			});
+			
+			
+			gameConnector.signalStandUp.add(function(user:User):void{
+				trace(" stand up");
 			});
 		}
 		
