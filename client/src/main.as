@@ -4,6 +4,8 @@ package
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	
+	import EXIT.util.JSONLoader;
+	
 	import model.MainModel;
 	
 	import module.IPage;
@@ -40,9 +42,18 @@ package
 			
 			mainModel.addChangePageCallback(changePage);
 			mainModel.addFreezeCallback(freezeCallback);
-			mainModel.changePage(MainModel.PAGE_ROOM);
 			
 			freezeMc.alpha = .5;
+			
+			var jsonLoader:JSONLoader = new JSONLoader("https://graph.facebook.com/"+UserData.fbuid);
+			jsonLoader.signalComplete.add(getUserData);
+			jsonLoader.load();
+		}
+		
+		private function getUserData(_json:*):void
+		{
+			mainModel.changePage(MainModel.PAGE_ROOM);
+			ServerConnector.getInstace().start(UserData.fbuid+"_"+_json.name+"_"+Math.random());
 		}
 		
 		private function changePage(_page:String):void

@@ -14,6 +14,8 @@ package module.gamepage
 	import flash.text.TextFormat;
 	import flash.ui.Keyboard;
 	
+	import model.MainModel;
+	
 	import module.IPage;
 	
 	import net.area80.ui.component.Scrollbar;
@@ -52,6 +54,13 @@ package module.gamepage
 			});
 			var deal:TextField = createText("deal",function():void{
 				gameConnector.deal(10);
+			});
+			
+			var exit:TextField = createText("exit",function():void{
+				ServerConnector.getInstace().backHome( function():void{
+						MainModel.getInstance().changePage( MainModel.PAGE_ROOM );
+					}
+				);
 			});
 			
 			

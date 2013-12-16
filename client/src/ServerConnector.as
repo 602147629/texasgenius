@@ -16,6 +16,8 @@ package
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	
+	import model.MainModel;
+	
 	import org.osflash.signals.Signal;
 	
 //	http://198.57.254.131:8080/admin/AdminTool.html
@@ -32,6 +34,8 @@ package
 
 	public class ServerConnector
 	{
+		public var isServerStarted:Boolean = false;
+		
 		private var _user:String;
 		
 		public const SIGNAL_ROOM_JOIN:Signal = new Signal(Room);
@@ -111,6 +115,18 @@ package
 			
 			sfs.loadConfig("config/sfs-config.xml");
 //			sfs.connectWithConfig(configData);
+		}
+		
+		public function backHome( onComplete:Function ):void
+		{
+			var onJoinRoom:Function = function():void{
+				onComplete();
+				SIGNAL_ROOM_JOIN.remove(onJoinRoom);
+			};
+			SIGNAL_ROOM_JOIN.add(onJoinRoom);
+			changeZone(DEFAULT_ZONE);
+			
+			MainModel.getInstance().changePage(MainModel.PAGE_GAME);
 		}
 		
 		protected function onUserCountChange(event:SFSEvent):void
@@ -217,6 +233,8 @@ package
 			
 			var updatedUser:User = sfs.mySelf;
 			Shows.addByClass(this,"onRoomJoin isSpectator : "+updatedUser.isSpectator);
+			
+			isServerStarted = true;
 			
 			SIGNAL_ROOM_JOIN.dispatch(_currentRoom);
 			updateRoomList();

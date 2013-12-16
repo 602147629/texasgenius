@@ -5,7 +5,6 @@ package module.roompage
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
-
 	
 	import EXIT.util.JSONLoader;
 	
@@ -14,12 +13,10 @@ package module.roompage
 	import model.MainModel;
 	
 	import module.IPage;
-	import module.gamepage.SlotMachineComponent;
 	import module.roompage.friendmodule.FriendListController;
 	import module.roompage.menumodule.MenuController;
 	import module.roompage.roommodule.CreateRoomPopup;
 	import module.roompage.roommodule.RoomController;
-	import module.roompage.roommodule.RoomPageModel;
 	import module.roompage.roommodule.SearchController;
 	import module.roompage.usergamemodule.UserGameController;
 	
@@ -38,14 +35,17 @@ package module.roompage
 		
 		public function start():void
 		{
-			MainModel.getInstance().freeze();
+			serverConnector = ServerConnector.getInstace();
+			serverConnector.SIGNAL_ROOM_JOIN.add( onRoomJoined );
+			
+			if( !serverConnector.isServerStarted ){
+				MainModel.getInstance().freeze();
+			}
 			
 			//menu
 			
 			var menuController:MenuController = new MenuController(this);
 			
-			serverConnector = ServerConnector.getInstace();
-			serverConnector.SIGNAL_ROOM_JOIN.add( onRoomJoined );
 			
 			//detail
 			var image:ImageBox = new ImageBox("https://graph.facebook.com/"+UserData.fbuid+"/picture",50,50);
@@ -101,20 +101,14 @@ package module.roompage
 			//friend
 			var friendListController:FriendListController = new FriendListController( friendList , this);
 			
-			var jsonLoader:JSONLoader = new JSONLoader("https://graph.facebook.com/"+UserData.fbuid);
-			jsonLoader.signalComplete.add(getUserData);
-			jsonLoader.load();
+			userNameText.text = UserData.name;
 			
 			//social
 			var userGameController:UserGameController = new UserGameController(gangBtn,socialBtn,gangContainer,socialContainer);
 			
 		}
 
-		private function getUserData(_json:*):void
-		{
-			userNameText.text = _json.name;
-			serverConnector.start(UserData.fbuid+"_"+_json.name+"_"+Math.random());
-		}
+		
 		
 		private function onRoomJoined(room:Room):void
 		{

@@ -21,9 +21,6 @@ package module.roompage.roommodule
 		{
 			roomSprite = _roomSprite;
 			serverConnector.SIGNAL_ROOM_LIST_UPDATE.add( onRoomListUpdate );
-//			serverConnector.SIGNAL_ROOM_ADDED.add( onRoomAdded );
-//			serverConnector.SIGNAL_ROOM_JOINED.add( onRoomJoin );
-//			serverConnector.SIGNAL_ROOM_DELETED.add( onRoomDeleted );
 			serverConnector.SIGNAL_ROOM_USER_COUNT_CHANGE.add( onRoomUserCountChange );
 			RoomPageModel.getInstance().signalUpdateRoom.add(onRoomListUpdate);
 		}
@@ -86,8 +83,6 @@ package module.roompage.roommodule
 		public function dispose():void
 		{
 			serverConnector.SIGNAL_ROOM_LIST_UPDATE.removeAll();
-//			serverConnector.SIGNAL_ROOM_ADDED.removeAll();
-//			serverConnector.SIGNAL_ROOM_JOINED.removeAll();
 			serverConnector.SIGNAL_ROOM_USER_COUNT_CHANGE.removeAll();
 			serverConnector = null;
 			
