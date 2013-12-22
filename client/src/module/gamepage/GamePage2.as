@@ -57,10 +57,7 @@ package module.gamepage
 			});
 			
 			var exit:TextField = createText("exit",function():void{
-				ServerConnector.getInstace().backHome( function():void{
-						MainModel.getInstance().changePage( MainModel.PAGE_ROOM );
-					}
-				);
+				gameConnector.backHome();
 			});
 			
 			
@@ -79,6 +76,9 @@ package module.gamepage
 			gameConnector.signalStartWithConfig.add( function(_config:String):void{
 				trace(" start with config : "+_config);
 			});
+			gameConnector.signalSpectatorGetRoomStatus.add( function(_currentSeatPosition:int , _currentTurn:int , _timeoutUserTurn:int , _roomConfig:String):void{
+				trace(" _currentSeatPosition : "+_currentSeatPosition+" _currentTurn:"+_currentTurn+" _timeoutUserTurn:"+_timeoutUserTurn+" _roomConfig:"+_roomConfig);
+			});
 			gameConnector.signalStartUserTurn.add( function(sitPosition:int):void{
 				trace(" start user turn ... sitPosition="+sitPosition);
 			});
@@ -86,9 +86,9 @@ package module.gamepage
 			{
 				trace(" user deal : "+value+"  frome user position : "+sitPosition+" turn:"+turn);
 			});
-			gameConnector.signalEndTurn.add(function():void
+			gameConnector.signalEndTurn.add(function(_winnerPosition:int):void
 			{
-				trace(" end turn");
+				trace(" end turn   _winnerPosition:"+_winnerPosition);
 			});
 			
 			

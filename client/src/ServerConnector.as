@@ -103,6 +103,7 @@ package
 			sfs.addEventListener(SFSEvent.CONFIG_LOAD_SUCCESS, onConfigLoadSuccess);
 			sfs.addEventListener(SFSEvent.CONFIG_LOAD_FAILURE, onConfigLoadFailure);
 			sfs.addEventListener(SFSEvent.LOGIN, onLogin);
+			sfs.addEventListener(SFSEvent.LOGIN_ERROR, onRoomJoinError);
 			
 			sfs.addEventListener(SFSEvent.ROOM_ADD, onRoomAdded);
 			sfs.addEventListener(SFSEvent.ROOM_REMOVE, onRoomRemoved);
@@ -110,6 +111,10 @@ package
 			sfs.addEventListener(SFSEvent.ROOM_JOIN, onRoomJoin);
 			sfs.addEventListener(SFSEvent.ROOM_JOIN_ERROR, onRoomJoinError);
 //			sfs.addEventListener(SFSEvent.SPECTATOR_TO_PLAYER, onRoomJoin);
+			
+			sfs.addEventListener(SFSEvent.USER_EXIT_ROOM, function():void{
+				Shows.addByClass(this,"USER_EXIT_ROOM...");
+			});
 			
 			sfs.addEventListener(SFSEvent.USER_COUNT_CHANGE , onUserCountChange );
 			
@@ -125,8 +130,6 @@ package
 			};
 			SIGNAL_ROOM_JOIN.add(onJoinRoom);
 			changeZone(DEFAULT_ZONE);
-			
-			MainModel.getInstance().changePage(MainModel.PAGE_GAME);
 		}
 		
 		protected function onUserCountChange(event:SFSEvent):void
@@ -223,8 +226,12 @@ package
 		
 		public function join(_id:int ):void
 		{
-			var request:JoinRoomRequest = new JoinRoomRequest(_id, null, sfs.lastJoinedRoom.id , true );
-			sfs.send(request);
+			if( sfs.lastJoinedRoom ){
+				var request:JoinRoomRequest = new JoinRoomRequest(_id, null, sfs.lastJoinedRoom.id , true );
+				sfs.send(request);
+			}else{
+				onConnectionLost();
+			}
 		}
 		
 		protected function onRoomJoin(event:SFSEvent):void

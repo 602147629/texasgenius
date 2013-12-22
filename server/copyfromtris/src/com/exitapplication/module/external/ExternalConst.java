@@ -13,13 +13,14 @@ public class ExternalConst {
 	public final static String START_GAME_TURN = "startgameturn"; 
 	public final static String START_USER_TURN = "startuserturn";
 	public final static String END_TURN  = "endturn";
+	public final static String SEND_TURN_DATA  = "sendturndata";
 	
 	
 	//client send
 	public final static String USER_SIT = "usersit"; 
 	public final static String USER_DEAL  = "userdeal";
 	
-	//client var
+	//var
 	public final static String SIT_POSITION = "sitposition";
 	public final static String PLAYER_STATUS = "playerstatus";
 	public final static String FB_UID = "fbuid";
@@ -28,4 +29,5 @@ public class ExternalConst {
 	public final static String REASON = "reason";
 	public final static String VALUE = "value";
 	public final static String TURN = "turn";
+	public final static String TIME = "time";
 }

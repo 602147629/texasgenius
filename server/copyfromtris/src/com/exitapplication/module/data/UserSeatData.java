@@ -10,6 +10,7 @@ public class UserSeatData {
 	public int dealValue = 0;
 	public boolean isDropped = false;
 	public boolean isOut = false;
+	public Double winScore = -1.0;
 
 	public UserSeatData(User user, String fbuid, int position, String playerStatus ){
 		this.user = user;

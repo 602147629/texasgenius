@@ -9,6 +9,8 @@ package
 	import com.smartfoxserver.v2.requests.PlayerToSpectatorRequest;
 	import com.smartfoxserver.v2.requests.SpectatorToPlayerRequest;
 	
+	import model.MainModel;
+	
 	import module.gamepage.PlayerSitData;
 	
 	import org.osflash.signals.Signal;
@@ -51,11 +53,18 @@ package
 		 */		
 		public var signalUserDeal:Signal = new Signal(int,int,int);
 		
+		/**
+		 * 1 int > winner sit position
+		 */		
+		public var signalEndTurn:Signal = new Signal(int);
 		
 		/**
-		 * 
+		 * 1 int > current seat index ถ้ายังไม่เริ่มแจกไพ่ return -1
+		 * 2 int > current turn (วนมากี่รอบแล้ว)
+		 * 3 int > timeout user turn.
+		 * 4 String > room config data
 		 */		
-		public var signalEndTurn:Signal = new Signal();
+		public var signalSpectatorGetRoomStatus:Signal = new Signal(int,int,int,String);
 		
 		
 		//server send
@@ -66,6 +75,7 @@ package
 		private const START_GAME_TURN:String  = "startgameturn";
 		private const START_USER_TURN:String = "startuserturn";
 		private const END_TURN:String  = "endturn";
+		private const SEND_TURN_DATA:String  = "sendturndata";
 		
 		//client send
 		private const USER_SIT:String  = "usersit"; 
@@ -80,11 +90,13 @@ package
 		private const REASON:String = "reason";
 		private const VALUE:String = "value";
 		private const TURN:String = "turn";
+		private const TIME:String = "time";
 		
 		private var sfs:SmartFox;
 		private var sitPosition:int;
 		private var playerStatus:String;
 		private var fbuid:String;
+		private var isLeavingRoom:Boolean = false;
 		
 		public function GameConnector(sfs:SmartFox)
 		{
@@ -94,6 +106,21 @@ package
 			sfs.addEventListener(SFSEvent.SPECTATOR_TO_PLAYER, onSpectatorToPlayer);
 			sfs.addEventListener(SFSEvent.PLAYER_TO_SPECTATOR, onPlayerToSpectator);
 			sfs.addEventListener(SFSEvent.SPECTATOR_TO_PLAYER_ERROR, onSpectatorToPlayerError);
+		}
+		
+		public function dispose():void
+		{
+			signalEndTurn.removeAll();
+			signalSitComplete.removeAll();
+			signalSitError.removeAll();
+			signalStandUp.removeAll();
+			signalStartUserTurn.removeAll();
+			signalStartWithConfig.removeAll();
+			signalUserDeal.removeAll();
+			sfs.removeEventListener(SFSEvent.EXTENSION_RESPONSE, onExtensionResponse);
+			sfs.removeEventListener(SFSEvent.SPECTATOR_TO_PLAYER, onSpectatorToPlayer);
+			sfs.removeEventListener(SFSEvent.PLAYER_TO_SPECTATOR, onPlayerToSpectator);
+			sfs.removeEventListener(SFSEvent.SPECTATOR_TO_PLAYER_ERROR, onSpectatorToPlayerError);
 		}
 		
 		
@@ -149,6 +176,10 @@ package
 			var user:User = event.params.user as User
 			Shows.addByClass(this,"onSpectatorToPlayer isMe : "+user.isItMe);
 			signalStandUp.dispatch(user);
+			if( user.isItMe ){
+				isLeavingRoom=false;
+				leaveRoom();
+			}
 		}
 		
 		
@@ -162,6 +193,31 @@ package
 			sfsObj.putInt(VALUE,_value);
 			sfs.send( new ExtensionRequest( USER_DEAL , sfsObj , sfs.lastJoinedRoom) );
 		}
+		
+		
+		
+		
+		public function backHome():void
+		{
+			if( !sfs.mySelf.isSpectator ){
+				MainModel.getInstance().freeze();
+				isLeavingRoom = true;
+				standUp();
+			}else{
+				leaveRoom();
+			}
+		}
+		private function leaveRoom():void
+		{
+			var backHome:Function = function():void{
+				dispose();
+				MainModel.getInstance().unfreeze();
+				MainModel.getInstance().changePage( MainModel.PAGE_ROOM );
+			};
+			ServerConnector.getInstace().backHome(backHome);
+		}
+		
+		
 		
 		public function getMyId():int { return sfs.mySelf.id; }
 		
@@ -201,7 +257,14 @@ package
 					signalUserDeal.dispatch( params.getInt(VALUE) , params.getInt(SIT_POSITION) , params.getInt(TURN) );
 				break;
 				case END_TURN :
-					signalEndTurn.dispatch();
+					signalEndTurn.dispatch(params.getInt(SIT_POSITION));
+				break;
+				case SEND_TURN_DATA :
+					signalSpectatorGetRoomStatus.dispatch(
+						params.getInt(SIT_POSITION),
+						params.getInt(TURN),
+						params.getInt(TIME),
+						params.getUtfString(CONFIG_DATA) );
 				break;
 			}
 		}
