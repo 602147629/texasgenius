@@ -31,11 +31,11 @@ public class TexasExtension extends SFSExtension
 	
 	//seat
 	public TurnController turnController = new TurnController(this);
+	public String configData = "";
 	private UserSeatData[] userSeatDatas;
 	private UserSeatData[] canPlayUserSeatDatas;
 	private int numUserSeated = 0;
 	
-	private String configData = "";
 	
 	@Override
 	public void init()
@@ -68,6 +68,7 @@ public class TexasExtension extends SFSExtension
 		turnController.signalEnd.add( new SignalEvent(){
 			public void dispatch(Object...args)
 			{
+				configData = "";
 				urlLoaderStartGame.dispose();
 				ArrayList<UserSeatData> playerArray = getUserSitDatas();
 				if( playerArray.size() >= 2 ){
@@ -96,7 +97,7 @@ public class TexasExtension extends SFSExtension
 		}
 		userSeatDatas[sitIndex] = new UserSeatData(user, fbuid , sitIndex , playerStatus);
 		numUserSeated++;
-		trace("numUserSeated:"+numUserSeated);
+		trace("numUserSeated add:"+numUserSeated);
 		
 		traceUserSeat();
 		
@@ -131,6 +132,7 @@ public class TexasExtension extends SFSExtension
 		}
 		traceUserSeat();
 		numUserSeated--;
+		trace("numUserSeated remove:"+numUserSeated);
 		
 		if( currentState==WAIT_PLAYER_STATE){
 			
@@ -203,7 +205,7 @@ public class TexasExtension extends SFSExtension
 		urlLoaderStartGame.load(ExternalConst.ALL_CARD_URL);
 	}
 	
-	private ArrayList<UserSeatData> getUserSitDatas()
+	public ArrayList<UserSeatData> getUserSitDatas()
 	{
 		ArrayList<UserSeatData> playerArray = new ArrayList<UserSeatData>();
 		for( int i=0 ; i<=userSeatDatas.length-1 ; i++){

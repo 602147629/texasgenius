@@ -1,5 +1,7 @@
 package com.exitapplication.module.external;
 
+import java.util.ArrayList;
+
 import com.exitapplication.TexasExtension;
 import com.exitapplication.module.data.UserSeatData;
 import com.smartfoxserver.v2.core.ISFSEvent;
@@ -30,21 +32,26 @@ public class OnUserJoin extends BaseServerEventHandler {
 			currentSeat = gameExt.turnController.currentPlayerSeat();
 			currentTurn = gameExt.turnController.currentCardTurn();
 			timeRemain = gameExt.turnController.timeOutUserTurn();
-			for( int i=0 ; i<=gameExt.turnController.activePlayerArray.size()-1 ; i++ ){
-				UserSeatData userSeatData = gameExt.turnController.activePlayerArray.get(i);
-				playerData+="{";
-				playerData+="		\"fbuid\":\""+userSeatData.fbuid+"\",";
-				playerData+="		\"position\":\""+userSeatData.position+"\",";
-				playerData+="		\"dealValue\":\""+userSeatData.dealValue+"\",";
-				playerData+="		\"playerStatus\":"+userSeatData.playerStatus+",";
-				playerData+="		\"isDropped\":\""+userSeatData.isDropped+"\"";
-				playerData+="}";
-				
-				if( i!=gameExt.turnController.activePlayerArray.size()-1){
-					playerData+=",";
-				}
+		}
+		
+		ArrayList<UserSeatData> playerArray = gameExt.getUserSitDatas();
+		for( int i=0 ; i<=playerArray.size()-1 ; i++ ){
+			UserSeatData userSeatData = playerArray.get(i);
+			playerData+="{";
+			playerData+="		\"fbuid\":\""+userSeatData.fbuid+"\",";
+			playerData+="		\"position\":\""+userSeatData.position+"\",";
+			playerData+="		\"dealValue\":\""+userSeatData.dealValue+"\",";
+			playerData+="		\"playerStatus\":"+userSeatData.playerStatus+",";
+			playerData+="		\"isDropped\":\""+userSeatData.isDropped+"\"";
+			playerData+="}";
+			
+			if( i!=playerArray.size()-1){
+				playerData+=",";
 			}
-			turnConfigData = gameExt.turnController.configData;
+		}
+		turnConfigData = gameExt.configData;
+		if( turnConfigData == ""){
+			turnConfigData = "\"\"";
 		}
 		
 		String startConfigData = "{ \"playerData\":["+playerData+"] ,";

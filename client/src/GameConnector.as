@@ -176,7 +176,7 @@ package
 			var user:User = event.params.user as User
 			Shows.addByClass(this,"onSpectatorToPlayer isMe : "+user.isItMe);
 			signalStandUp.dispatch(user);
-			if( user.isItMe ){
+			if( user.isItMe && isLeavingRoom){
 				isLeavingRoom=false;
 				leaveRoom();
 			}
