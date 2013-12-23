@@ -36,7 +36,6 @@ public class TexasExtension extends SFSExtension
 	private UserSeatData[] canPlayUserSeatDatas;
 	private int numUserSeated = 0;
 	
-	
 	@Override
 	public void init()
 	{
@@ -51,19 +50,17 @@ public class TexasExtension extends SFSExtension
 			public void handleClientRequest(User user, ISFSObject params)
 			{
 				ISFSObject resObj = new SFSObject();
-				resObj.putUtfString(ExternalConst.CONFIG_DATA,params.getUtfString(ExternalConst.CONFIG_DATA)); 
+				resObj.putUtfString(ExternalConst.CONFIG_DATA,params.getUtfString(ExternalConst.CONFIG_DATA));
 				send(ExternalConst.PROVIDE_CONFIG, resObj, getParentRoom().getUserList());
 			}
 		});*/
 		
-		addRequestHandler(ExternalConst.USER_DEAL,OnUserDeal.class); 
-		
+		addRequestHandler(ExternalConst.USER_DEAL,OnUserDeal.class);
 		
 		addEventHandler(SFSEventType.USER_JOIN_ROOM, OnUserJoin.class);
 		addEventHandler(SFSEventType.USER_DISCONNECT, OnUserOut.class);
 		addEventHandler(SFSEventType.USER_LEAVE_ROOM, OnUserOut.class);// not call
 		addEventHandler(SFSEventType.PLAYER_TO_SPECTATOR, OnUserOut.class);
-		
 		
 		turnController.signalEnd.add( new SignalEvent(){
 			public void dispatch(Object...args)
@@ -100,7 +97,6 @@ public class TexasExtension extends SFSExtension
 		trace("numUserSeated add:"+numUserSeated);
 		
 		traceUserSeat();
-		
 		
 		SFSObject sfsObj = new SFSObject();
 		sfsObj.putInt(ExternalConst.SIT_POSITION, sitIndex);
@@ -173,14 +169,12 @@ public class TexasExtension extends SFSExtension
 		}
 		nameString += "]";
 		
-		
 		trace(" param load : "+nameString);
 		
 		urlLoaderStartGame = new UrlLoader();
 		urlLoaderStartGame.addParam("action_option","getCard");
 		urlLoaderStartGame.addParam("name",nameString);
 		urlLoaderStartGame.addParam("roomid",Integer.toString(getParentRoom().getId()) );
-		
 		
 		urlLoaderStartGame.signalComplete.add(new SignalEvent(){
 			public void dispatch(Object...args)
@@ -216,9 +210,8 @@ public class TexasExtension extends SFSExtension
 		return playerArray;
 	}
 	
-	
 	@Override
-	public void destroy() 
+	public void destroy()
 	{
 		super.destroy();
 		trace("Tris game destroyed!");

@@ -45,6 +45,10 @@ package
 		 * 1 int > seat position
 		 */		
 		public var signalStartUserTurn:Signal = new Signal(int);
+		/**
+		 *
+		 */		
+		public var signalStartNewRoundTurn:Signal = new Signal();
 		
 		/**
 		 * 1 int > deal value if 0 mean "หมอบ"<br>
@@ -74,6 +78,7 @@ package
 		
 		private const START_GAME_TURN:String  = "startgameturn";
 		private const START_USER_TURN:String = "startuserturn";
+		private const START_NEW_ROUND_TURN:String = "startnewroundturn";
 		private const END_TURN:String  = "endturn";
 		private const SEND_TURN_DATA:String  = "sendturndata";
 		
@@ -249,6 +254,9 @@ package
 				case START_USER_TURN :
 					sitPosition = params.getInt(SIT_POSITION);
 					signalStartUserTurn.dispatch(sitPosition);
+				break;
+				case START_NEW_ROUND_TURN :
+					signalStartNewRoundTurn.dispatch();
 				break;
 				case PROVIDE_CONFIG :
 					//signalStartWithConfig.dispatch(params.getUtfString(CONFIG_DATA));

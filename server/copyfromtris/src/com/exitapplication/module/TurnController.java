@@ -190,6 +190,7 @@ public class TurnController {
     	if(currentPlayerTurnIndex>activePlayerArray.size()-1){
     		currentPlayerTurnIndex=0;
     		currentCardTurn++;
+    		texasExtension.send(ExternalConst.START_NEW_ROUND_TURN, new SFSObject() , texasExtension.getParentRoom().getUserList());
     	}
     	
     	texasExtension.trace("currentCardTurn:"+currentCardTurn+" / "+MAX_CARD_TURN);

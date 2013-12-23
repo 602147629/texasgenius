@@ -82,6 +82,9 @@ package module.gamepage
 			gameConnector.signalStartUserTurn.add( function(sitPosition:int):void{
 				trace(" start user turn ... sitPosition="+sitPosition);
 			});
+			gameConnector.signalStartNewRoundTurn.add( function():void{
+				trace(" start new round turn ");
+			});
 			gameConnector.signalUserDeal.add(function(value:int , sitPosition:int , turn:int):void
 			{
 				trace(" user deal : "+value+"  frome user position : "+sitPosition+" turn:"+turn);
