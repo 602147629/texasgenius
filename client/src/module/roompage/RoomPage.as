@@ -164,6 +164,9 @@ package module.roompage
 		{
 			var createRoomPopup:CreateRoomPopup = new CreateRoomPopup(
 				function(_name:String):void{
+					if(_name==""){
+						return;
+					}
 					MainModel.getInstance().isCreator = true;
 					serverConnector.createRoom(_name);
 					MainModel.getInstance().freeze();

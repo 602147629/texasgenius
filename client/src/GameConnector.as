@@ -16,6 +16,9 @@ package
 	import org.osflash.signals.Signal;
 	
 //http://www.smartfoxserver.com/forums/viewtopic.php?f=18&t=16204
+	
+	
+	
 	public class GameConnector
 	{
 		/**

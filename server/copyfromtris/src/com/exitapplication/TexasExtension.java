@@ -107,7 +107,7 @@ public class TexasExtension extends SFSExtension
 		
 		trace("currentState:"+currentState);
 		if( currentState==WAIT_PLAYER_STATE && numUserSeated>=2 ){
-			canPlayUserSeatDatas = userSeatDatas.clone();
+			//canPlayUserSeatDatas = userSeatDatas.clone();
 			startLoadConfig();
 		}
 	}
@@ -149,8 +149,9 @@ public class TexasExtension extends SFSExtension
 	
 	private void startLoadConfig()
 	{
+		canPlayUserSeatDatas = userSeatDatas.clone();
 		ArrayList<UserSeatData> playerArray = getUserSitDatas();
-		
+		traceUserSeat();
 		if( playerArray.size()<2 ){
 			return;
 		}

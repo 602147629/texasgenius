@@ -22,6 +22,7 @@ import com.smartfoxserver.v2.entities.data.SFSObject;
 public class TurnController {
 	final private int TIME_OUT_DISTRIBUTE_CARD = 5; 
 	final private int TIME_OUT_TURN = 10; 
+	final private int TIME_OUT_END = 5; 
 	final private int MAX_CARD_TURN = 3; 
 	
 	public Signal signalEnd = new Signal();
@@ -66,6 +67,9 @@ public class TurnController {
 			}
 		}
 		activePlayerArray = (ArrayList<UserSeatData>) playerArray.clone();
+		
+		texasExtension.trace("activePlayerArray length :"+activePlayerArray.size());
+		
 		extractJson(configData);
 		
 		currentPlayerTurnIndex = 0;
@@ -167,12 +171,17 @@ public class TurnController {
     	
     	// user droped card
     	if( _value==-1 ){
+    		
     		activePlayerArray.get(currentPlayerTurnIndex).isDropped = true;
     		activePlayerArray.remove(currentPlayerTurnIndex);
     		currentPlayerTurnIndex--;
     		if(currentPlayerTurnIndex<0){
     			currentPlayerTurnIndex = activePlayerArray.size()-1;
     		}
+
+    		texasExtension.trace(" _value:"+_value);
+    		texasExtension.trace(" activePlayerArray.size():"+activePlayerArray.size());
+    		
     	}else{
     		activePlayerArray.get(currentPlayerTurnIndex).dealValue += _value;
     	}
@@ -251,7 +260,8 @@ public class TurnController {
 		SFSObject sfsObj = new SFSObject();
 		sfsObj.putInt(ExternalConst.SIT_POSITION, winnerPlayer.position);
 		texasExtension.send(ExternalConst.END_TURN, sfsObj , texasExtension.getParentRoom().getUserList());
-		signalEnd.dispatch();
+		
+		taskHandle = sfs.getTaskScheduler().scheduleAtFixedRate(new EndTernTimeout(), TIME_OUT_END, TIME_OUT_END, TimeUnit.SECONDS);
 	}
 
 	private void startCountTime()
@@ -280,7 +290,15 @@ public class TurnController {
     {
         public void run()
         {
-        	userDeal(0,activePlayerArray.get(currentPlayerTurnIndex).user.getId());
+        	userDeal(-1,activePlayerArray.get(currentPlayerTurnIndex).user.getId());
         }
     }
+	
+	private class EndTernTimeout implements Runnable
+	{
+		public void run()
+		{
+			signalEnd.dispatch();
+		}
+	}
 }

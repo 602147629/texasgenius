@@ -32,6 +32,33 @@ package
 //	user : home@texasgenius.com
 //	pass : UZcyu0brSvmK8tm6HCfL
 
+	
+	
+	/*=============================================
+	Smartfox
+	http://103.7.56.137:8080/admin/AdminTool.html
+	user: sfsadmin_nok
+	password: YRjvqAzuCLJTDH
+	=============================================
+	Web ftp
+	website: texasgenius.com
+	Username: texasgen
+	Password: AsUXtTa4yQlZ
+	Domain: texasgenius.com
+	
+	database
+	http://texasgenius.com/adminPhP/
+	db: sf_tex
+	user: sf_usrtex
+	password: mequqxgPNcJZUTEX
+	=============================================
+	
+	103.7.56.137
+	Username: sf
+	Password: mP9QYzCI
+	*/
+	
+	
 	public class ServerConnector
 	{
 		public var isServerStarted:Boolean = false;
@@ -49,7 +76,7 @@ package
 		*/
 		
 		// Connection constants
-		private const SERVER_IP:String = "103.7.56.137";//"192.168.0.13";// "198.57.254.131";//"192.168.0.13";//// "203.170.193.44";
+		private const SERVER_IP:String = "103.7.56.137";//// "192.168.0.13";//"198.57.254.131";//// "203.170.193.44";
 		private const SERVER_PORT:int = 9933;//9339;//
 		private const LOBBY_ROOM:String = "The Lobby";
 		private const GAME_ROOMS_GROUP_NAME:String = "default";
@@ -207,6 +234,9 @@ package
 		
 		public function createRoom(_name:String):void
 		{
+			if(_name==""){
+				return;
+			}
 			// Create the room!
 			// Create game settings
 			var settings:SFSGameSettings = new SFSGameSettings(_name);
