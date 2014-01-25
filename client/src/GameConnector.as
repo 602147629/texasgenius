@@ -74,6 +74,21 @@ package
 		public var signalSpectatorGetRoomStatus:Signal = new Signal(int,int,int,String);
 		
 		
+		public var signalSendData:Signal = new Signal(int,String);
+		/**
+		 * 1 int > from user id 
+		 * 2 int > to user id 
+		 * 3 string > value
+		 */		
+		public var signalSendGift:Signal = new Signal(int,int,String);
+		/**
+		 * 1 int > from user id 
+		 * 2 int > to user id 
+		 * 3 string > value
+		 */		
+		public var signalSendEmotion:Signal = new Signal(int,int,String);
+		
+		
 		//server send
 		private const ON_SIT_COMPLETE:String  = "onsitcomplete";
 		private const ON_SIT_ERROR:String = "onsiterror";
@@ -88,6 +103,9 @@ package
 		//client send
 		private const USER_SIT:String  = "usersit"; 
 		private const USER_DEAL:String  = "userdeal";
+		private const DATA:String  = "data";
+		private const SEND_GIFT:String  = "sendgift";
+		private const SEND_EMOTION:String  = "sendemotion";
 		
 		//client var
 		private const SIT_POSITION:String = "sitposition";
@@ -99,6 +117,8 @@ package
 		private const VALUE:String = "value";
 		private const TURN:String = "turn";
 		private const TIME:String = "time";
+		
+		private const TO_USER_ID:String = "touserid";
 		
 		private var sfs:SmartFox;
 		private var sitPosition:int;
@@ -225,7 +245,26 @@ package
 			ServerConnector.getInstace().backHome(backHome);
 		}
 		
-		
+		public function sendData(_string:String):void
+		{
+			var sfsObj:SFSObject = new SFSObject();
+			sfsObj.putUtfString(VALUE,_string);
+			sfs.send( new ExtensionRequest( DATA , sfsObj , sfs.lastJoinedRoom) );
+		}
+		public function sendGift(_toUserId:int,_string:String):void
+		{
+			var sfsObj:SFSObject = new SFSObject();
+			sfsObj.putInt(TO_USER_ID,_toUserId);
+			sfsObj.putUtfString(VALUE,_string);
+			sfs.send( new ExtensionRequest( SEND_GIFT , sfsObj , sfs.lastJoinedRoom) );
+		}
+		public function sendEmotion(_toUserId:int,_string:String):void
+		{
+			var sfsObj:SFSObject = new SFSObject();
+			sfsObj.putInt(TO_USER_ID,_toUserId);
+			sfsObj.putUtfString(VALUE,_string);
+			sfs.send( new ExtensionRequest( SEND_EMOTION , sfsObj , sfs.lastJoinedRoom) );
+		}
 		
 		public function getMyId():int { return sfs.mySelf.id; }
 		
@@ -235,9 +274,9 @@ package
 			var cmd:String = evt.params.cmd
 			var sitPosition:int;
 			var userId:int;
+			trace(" onExtensionResponse ... : "+cmd);
 			switch(cmd)
 			{
-				case "test" :
 					Shows.addByClass(this," test : v="+params.getUtfString("t")+" ... "+params.getUtfString("data"));
 					break;
 				case ON_SIT_COMPLETE :
@@ -276,6 +315,15 @@ package
 						params.getInt(TURN),
 						params.getInt(TIME),
 						params.getUtfString(CONFIG_DATA) );
+				break;
+				case DATA :
+					signalSendData.dispatch( params.getInt(USER_ID) , params.getUtfString(VALUE) );
+				break;
+				case SEND_GIFT :
+					signalSendGift.dispatch( params.getInt(USER_ID) , params.getInt(TO_USER_ID) , params.getUtfString(VALUE) );
+				break;
+				case SEND_EMOTION :
+					signalSendEmotion.dispatch( params.getInt(USER_ID) , params.getInt(TO_USER_ID) , params.getUtfString(VALUE) );
 				break;
 			}
 		}

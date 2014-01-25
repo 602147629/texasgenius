@@ -20,6 +20,9 @@ public class ExternalConst {
 	//client send
 	public final static String USER_SIT = "usersit"; 
 	public final static String USER_DEAL  = "userdeal";
+	public final static String DATA  = "data";
+	public final static String SEND_GIFT  = "sendgift";
+	public final static String SEND_EMOTION  = "sendemotion";
 	
 	//var
 	public final static String SIT_POSITION = "sitposition";
@@ -31,4 +34,6 @@ public class ExternalConst {
 	public final static String VALUE = "value";
 	public final static String TURN = "turn";
 	public final static String TIME = "time";
+
+	public final static String TO_USER_ID = "touserid";
 }

@@ -60,6 +60,18 @@ package module.gamepage
 				gameConnector.backHome();
 			});
 			
+			var data:TextField = createText("data",function():void{
+				gameConnector.sendData("send data...");
+			});
+			
+			var gift:TextField = createText("gift",function():void{
+				gameConnector.sendGift(2,"send gift...");
+			});
+			
+			var emotion:TextField = createText("emotion",function():void{
+				gameConnector.sendEmotion(2,"send emotion...");
+			});
+			
 			
 			// signal callback
 			gameConnector.signalSitComplete.add(function( playerSitData:PlayerSitData ):void{
@@ -95,8 +107,17 @@ package module.gamepage
 			});
 			
 			
-			gameConnector.signalStandUp.add(function(user:User):void{
-				trace(" stand up");
+			
+			
+			gameConnector.signalSendData.add(function(_userId:int,_data:String):void{
+				trace(" signalSendData   _userId:"+_userId+" _data"+_data);
+			});
+			
+			gameConnector.signalSendGift.add(function(_userId:int,_toUserId:int,_data:String):void{
+				trace(" signalSendGift  _userId:"+_userId+" _toUserId:"+_toUserId+" _data"+_data);
+			});
+			gameConnector.signalSendEmotion.add(function(_userId:int,_toUserId:int,_data:String):void{
+				trace(" signalSendEmotion  _userId:"+_userId+" _toUserId:"+_toUserId+" _data"+_data);
 			});
 		}
 		

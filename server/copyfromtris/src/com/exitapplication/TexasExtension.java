@@ -11,6 +11,9 @@ import com.exitapplication.module.external.ExternalConst;
 import com.exitapplication.module.external.OnUserDeal;
 import com.exitapplication.module.external.OnUserJoin;
 import com.exitapplication.module.external.OnUserOut;
+import com.exitapplication.module.external.OnUserSendData;
+import com.exitapplication.module.external.OnUserSendEmotion;
+import com.exitapplication.module.external.OnUserSendGift;
 import com.exitapplication.module.external.TestExt;
 import com.exitapplication.module.external.UserSitEvent;
 import com.smartfoxserver.v2.core.SFSEventType;
@@ -56,6 +59,9 @@ public class TexasExtension extends SFSExtension
 		});*/
 		
 		addRequestHandler(ExternalConst.USER_DEAL,OnUserDeal.class);
+		addRequestHandler(ExternalConst.DATA,OnUserSendData.class);
+		addRequestHandler(ExternalConst.SEND_GIFT,OnUserSendGift.class);
+		addRequestHandler(ExternalConst.SEND_EMOTION,OnUserSendEmotion.class);
 		
 		addEventHandler(SFSEventType.USER_JOIN_ROOM, OnUserJoin.class);
 		addEventHandler(SFSEventType.USER_DISCONNECT, OnUserOut.class);
