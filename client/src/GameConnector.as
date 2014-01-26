@@ -37,7 +37,7 @@ package
 		/**
 		 * User > who is stand up. 
 		 */		
-		public var signalStandUp:Signal = new Signal(User);
+		public var signalStandUp:Signal = new Signal(int);
 		
 		
 		/**
