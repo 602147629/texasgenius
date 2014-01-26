@@ -15,6 +15,7 @@ public class ExternalConst {
 	public final static String START_NEW_ROUND_TURN = "startnewroundturn";
 	public final static String END_TURN  = "endturn";
 	public final static String SEND_TURN_DATA  = "sendturndata";
+	public final static String ON_USER_OUT  = "onuserout";
 	
 	
 	//client send

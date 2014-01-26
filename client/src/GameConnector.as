@@ -99,6 +99,7 @@ package
 		private const START_NEW_ROUND_TURN:String = "startnewroundturn";
 		private const END_TURN:String  = "endturn";
 		private const SEND_TURN_DATA:String  = "sendturndata";
+		private const ON_USER_OUT:String  = "onuserout";
 		
 		//client send
 		private const USER_SIT:String  = "usersit"; 
@@ -120,7 +121,7 @@ package
 		
 		private const TO_USER_ID:String = "touserid";
 		
-		private var sfs:SmartFox;
+		private var _sfs:SmartFox;
 		private var sitPosition:int;
 		private var playerStatus:String;
 		private var fbuid:String;
@@ -128,7 +129,7 @@ package
 		
 		public function GameConnector(sfs:SmartFox)
 		{
-			this.sfs = sfs;
+			this._sfs = sfs;
 			
 			sfs.addEventListener(SFSEvent.EXTENSION_RESPONSE, onExtensionResponse);
 			sfs.addEventListener(SFSEvent.SPECTATOR_TO_PLAYER, onSpectatorToPlayer);
@@ -145,10 +146,16 @@ package
 			signalStartUserTurn.removeAll();
 			signalStartWithConfig.removeAll();
 			signalUserDeal.removeAll();
-			sfs.removeEventListener(SFSEvent.EXTENSION_RESPONSE, onExtensionResponse);
-			sfs.removeEventListener(SFSEvent.SPECTATOR_TO_PLAYER, onSpectatorToPlayer);
-			sfs.removeEventListener(SFSEvent.PLAYER_TO_SPECTATOR, onPlayerToSpectator);
-			sfs.removeEventListener(SFSEvent.SPECTATOR_TO_PLAYER_ERROR, onSpectatorToPlayerError);
+			
+			signalSpectatorGetRoomStatus.removeAll();
+			signalSendData.removeAll();
+			signalSendGift.removeAll();
+			signalSendEmotion.removeAll();
+			
+			_sfs.removeEventListener(SFSEvent.EXTENSION_RESPONSE, onExtensionResponse);
+			_sfs.removeEventListener(SFSEvent.SPECTATOR_TO_PLAYER, onSpectatorToPlayer);
+			_sfs.removeEventListener(SFSEvent.PLAYER_TO_SPECTATOR, onPlayerToSpectator);
+			_sfs.removeEventListener(SFSEvent.SPECTATOR_TO_PLAYER_ERROR, onSpectatorToPlayerError);
 		}
 		
 		
@@ -162,7 +169,7 @@ package
 			sitPosition = _sitPosition;
 			fbuid = _fbuid;
 			playerStatus = _playerStatus;
-			sfs.send( new SpectatorToPlayerRequest(sfs.lastJoinedRoom) );
+			_sfs.send( new SpectatorToPlayerRequest(_sfs.lastJoinedRoom) );
 		}
 		
 		protected function onSpectatorToPlayer(event:SFSEvent):void
@@ -174,7 +181,7 @@ package
 				sfsObj.putInt(SIT_POSITION,sitPosition);
 				sfsObj.putUtfString(FB_UID,fbuid);
 				sfsObj.putUtfString(PLAYER_STATUS,playerStatus);
-				sfs.send( new ExtensionRequest( USER_SIT , sfsObj , sfs.lastJoinedRoom) );
+				_sfs.send( new ExtensionRequest( USER_SIT , sfsObj , _sfs.lastJoinedRoom) );
 			}
 		}
 		
@@ -196,14 +203,14 @@ package
 		
 		public function standUp():void
 		{
-			sfs.send( new PlayerToSpectatorRequest(sfs.lastJoinedRoom) );
+			_sfs.send( new PlayerToSpectatorRequest(_sfs.lastJoinedRoom) );
 		}
 		
 		protected function onPlayerToSpectator(event:SFSEvent):void
 		{
 			var user:User = event.params.user as User
 			Shows.addByClass(this,"onSpectatorToPlayer isMe : "+user.isItMe);
-			signalStandUp.dispatch(user);
+			
 			if( user.isItMe && isLeavingRoom){
 				isLeavingRoom=false;
 				leaveRoom();
@@ -219,7 +226,7 @@ package
 		{
 			var sfsObj:SFSObject = new SFSObject();
 			sfsObj.putInt(VALUE,_value);
-			sfs.send( new ExtensionRequest( USER_DEAL , sfsObj , sfs.lastJoinedRoom) );
+			_sfs.send( new ExtensionRequest( USER_DEAL , sfsObj , _sfs.lastJoinedRoom) );
 		}
 		
 		
@@ -227,7 +234,7 @@ package
 		
 		public function backHome():void
 		{
-			if( !sfs.mySelf.isSpectator ){
+			if( !_sfs.mySelf.isSpectator ){
 				MainModel.getInstance().freeze();
 				isLeavingRoom = true;
 				standUp();
@@ -249,24 +256,24 @@ package
 		{
 			var sfsObj:SFSObject = new SFSObject();
 			sfsObj.putUtfString(VALUE,_string);
-			sfs.send( new ExtensionRequest( DATA , sfsObj , sfs.lastJoinedRoom) );
+			_sfs.send( new ExtensionRequest( DATA , sfsObj , _sfs.lastJoinedRoom) );
 		}
 		public function sendGift(_toUserId:int,_string:String):void
 		{
 			var sfsObj:SFSObject = new SFSObject();
 			sfsObj.putInt(TO_USER_ID,_toUserId);
 			sfsObj.putUtfString(VALUE,_string);
-			sfs.send( new ExtensionRequest( SEND_GIFT , sfsObj , sfs.lastJoinedRoom) );
+			_sfs.send( new ExtensionRequest( SEND_GIFT , sfsObj , _sfs.lastJoinedRoom) );
 		}
 		public function sendEmotion(_toUserId:int,_string:String):void
 		{
 			var sfsObj:SFSObject = new SFSObject();
 			sfsObj.putInt(TO_USER_ID,_toUserId);
 			sfsObj.putUtfString(VALUE,_string);
-			sfs.send( new ExtensionRequest( SEND_EMOTION , sfsObj , sfs.lastJoinedRoom) );
+			_sfs.send( new ExtensionRequest( SEND_EMOTION , sfsObj , _sfs.lastJoinedRoom) );
 		}
 		
-		public function getMyId():int { return sfs.mySelf.id; }
+		public function getMyId():int { return _sfs.mySelf.id; }
 		
 		private function onExtensionResponse(evt:SFSEvent):void
 		{
@@ -274,9 +281,9 @@ package
 			var cmd:String = evt.params.cmd
 			var sitPosition:int;
 			var userId:int;
-			trace(" onExtensionResponse ... : "+cmd);
 			switch(cmd)
 			{
+				case "test" :
 					Shows.addByClass(this," test : v="+params.getUtfString("t")+" ... "+params.getUtfString("data"));
 					break;
 				case ON_SIT_COMPLETE :
@@ -284,7 +291,7 @@ package
 					var fbuid:String = params.getUtfString(FB_UID);
 					sitPosition = params.getInt(SIT_POSITION);
 					var playerStatus:String = params.getUtfString(PLAYER_STATUS);
-					var sitPlayerData:PlayerSitData = new PlayerSitData( userId , fbuid , sitPosition , playerStatus , sfs.mySelf.id==userId );
+					var sitPlayerData:PlayerSitData = new PlayerSitData( userId , fbuid , sitPosition , playerStatus , _sfs.mySelf.id==userId );
 					signalSitComplete.dispatch(sitPlayerData);
 				break;
 				case ON_SIT_ERROR :
@@ -316,6 +323,13 @@ package
 						params.getInt(TIME),
 						params.getUtfString(CONFIG_DATA) );
 				break;
+				case ON_USER_OUT :
+					signalStandUp.dispatch( params.getInt(USER_ID) );
+				break;
+				
+				
+				
+				
 				case DATA :
 					signalSendData.dispatch( params.getInt(USER_ID) , params.getUtfString(VALUE) );
 				break;
@@ -327,5 +341,8 @@ package
 				break;
 			}
 		}
+		
+		public function get sfs():SmartFox{ return _sfs; }
+		
 	}
 }

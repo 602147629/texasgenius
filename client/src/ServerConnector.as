@@ -65,6 +65,13 @@ package
 		
 		private var _user:String;
 		
+		public static const ZONE_1:String = "Zone1";
+		public static const ZONE_2:String = "Zone2";
+		public static const ZONE_3:String = "Zone3";
+		public static const ZONE_4:String = "Zone4";
+		public static const ZONE_5:String = "Zone5";
+		public static const ZONE_6:String = "Zone6";
+		
 		public const SIGNAL_ROOM_JOIN:Signal = new Signal(Room);
 		public const SIGNAL_ROOM_LIST_UPDATE:Signal = new Signal();
 		public const SIGNAL_ROOM_USER_COUNT_CHANGE:Signal = new Signal(Room);
@@ -254,14 +261,30 @@ package
 			sfs.send(request);
 		}
 		
-		public function join(_id:int ):void
+		public function join(_id:int=-1):void
 		{
 			if( sfs.lastJoinedRoom ){
+				if(_id==-1){
+					_id = randomRoom();
+				}
 				var request:JoinRoomRequest = new JoinRoomRequest(_id, null, sfs.lastJoinedRoom.id , true );
 				sfs.send(request);
 			}else{
 				onConnectionLost();
 			}
+		}
+		
+		private function randomRoom():int
+		{
+			var randomId:int = Math.floor(Math.random()*sfs.roomList.length);
+			var _id:int;
+			Shows.addByClass(this," join random id = "+_id+" , randomId:"+randomId+" name : "+Room(sfs.roomList[randomId]).name);
+			if( Room(sfs.roomList[randomId]).name == "The Lobby" ){
+				_id = randomRoom();
+			}else{
+				_id = Room(sfs.roomList[randomId]).id
+			}
+			return _id;
 		}
 		
 		protected function onRoomJoin(event:SFSEvent):void
@@ -272,7 +295,6 @@ package
 			Shows.addByClass(this,"onRoomJoin isSpectator : "+updatedUser.isSpectator);
 			
 			isServerStarted = true;
-			
 			SIGNAL_ROOM_JOIN.dispatch(_currentRoom);
 			updateRoomList();
 		}
@@ -345,5 +367,6 @@ package
 		
 		
 		public function get currentRoom():Room { return _currentRoom; }
+		
 	}
 }

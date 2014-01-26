@@ -8,6 +8,7 @@ import com.exitapplication.lib.signal.SignalEvent;
 import com.exitapplication.module.TurnController;
 import com.exitapplication.module.data.UserSeatData;
 import com.exitapplication.module.external.ExternalConst;
+import com.exitapplication.module.external.OnPublicMessage;
 import com.exitapplication.module.external.OnUserDeal;
 import com.exitapplication.module.external.OnUserJoin;
 import com.exitapplication.module.external.OnUserOut;
@@ -68,6 +69,8 @@ public class TexasExtension extends SFSExtension
 		addEventHandler(SFSEventType.USER_LEAVE_ROOM, OnUserOut.class);// not call
 		addEventHandler(SFSEventType.PLAYER_TO_SPECTATOR, OnUserOut.class);
 		
+		addEventHandler(SFSEventType.PUBLIC_MESSAGE, OnPublicMessage.class);
+		
 		turnController.signalEnd.add( new SignalEvent(){
 			public void dispatch(Object...args)
 			{
@@ -127,11 +130,17 @@ public class TexasExtension extends SFSExtension
 	
 	public void removeUser(User user)
 	{
+		Boolean isSeated = false;
 		for( int i=0 ; i<=userSeatDatas.length-1 ; i++){
 			if( userSeatDatas[i]!=null && userSeatDatas[i].user.getId() == user.getId() ){
 				userSeatDatas[i] = null;
+				isSeated = true;
 			}
 		}
+		if( isSeated==false ){
+			return;
+		}
+		
 		traceUserSeat();
 		numUserSeated--;
 		trace("numUserSeated remove:"+numUserSeated);

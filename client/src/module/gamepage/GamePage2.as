@@ -80,9 +80,9 @@ package module.gamepage
 			gameConnector.signalSitError.add(function(reason:String):void{
 				trace(" sit error : "+reason);
 			});
-			gameConnector.signalStandUp.add(function(user:User):void
+			gameConnector.signalStandUp.add(function(_userId:int):void
 			{
-				trace(" user stand up id : "+user.id);
+				trace(" user stand up id : "+_userId);
 			});
 			
 			gameConnector.signalStartWithConfig.add( function(_config:String):void{
@@ -119,6 +119,22 @@ package module.gamepage
 			gameConnector.signalSendEmotion.add(function(_userId:int,_toUserId:int,_data:String):void{
 				trace(" signalSendEmotion  _userId:"+_userId+" _toUserId:"+_toUserId+" _data"+_data);
 			});
+			
+			//get user list
+			for( var i:int=0 ; i<=sfs.userManager.getUserList().length-1 ; i++ ){
+				trace(" user:"+ User(sfs.userManager.getUserList()[i]).name+" , id:"+User(sfs.userManager.getUserList()[i]).id );
+			}
+			
+			
+			// get current zone
+			if(gameConnector.sfs.currentZone == ServerConnector.ZONE_1 ){
+			}else if(gameConnector.sfs.currentZone == ServerConnector.ZONE_2 ){
+			}else if(gameConnector.sfs.currentZone == ServerConnector.ZONE_3 ){
+			}else if(gameConnector.sfs.currentZone == ServerConnector.ZONE_4 ){
+			}else if(gameConnector.sfs.currentZone == ServerConnector.ZONE_5 ){
+			}else if(gameConnector.sfs.currentZone == ServerConnector.ZONE_6 ){
+			}
+			
 		}
 		
 		public function start():void
