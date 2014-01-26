@@ -20,7 +20,7 @@ import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 
 public class TurnController {
-	final private int TIME_OUT_DISTRIBUTE_CARD = 5; 
+	private Double TIME_OUT_DISTRIBUTE_CARD = 0.2; 
 	final private int TIME_OUT_TURN = 10; 
 	final private int TIME_OUT_END = 5; 
 	final private int MAX_CARD_TURN = 3; 
@@ -77,7 +77,9 @@ public class TurnController {
 			taskHandle.cancel(true);
 		}
 		
-		taskHandle = sfs.getTaskScheduler().scheduleAtFixedRate(new DistributeCardTimeout(), TIME_OUT_DISTRIBUTE_CARD, TIME_OUT_DISTRIBUTE_CARD, TimeUnit.SECONDS);
+		Double delay = Math.ceil( TIME_OUT_DISTRIBUTE_CARD*activePlayerArray.size() );
+		int delayInt = delay.intValue();
+		taskHandle = sfs.getTaskScheduler().scheduleAtFixedRate(new DistributeCardTimeout(), delayInt, delayInt, TimeUnit.SECONDS);
 	}
 	
 	private void extractJson(String string)
