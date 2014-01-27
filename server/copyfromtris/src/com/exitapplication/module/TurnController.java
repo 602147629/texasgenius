@@ -167,7 +167,7 @@ public class TurnController {
 		
 		ISFSObject resObj = new SFSObject();
 		resObj.putInt(ExternalConst.VALUE, _value );
-		resObj.putInt(ExternalConst.SIT_POSITION, currentPlayerTurnIndex ); 
+		resObj.putInt(ExternalConst.SIT_POSITION, currentPlayerSeat() ); 
 		resObj.putInt(ExternalConst.TURN, currentCardTurn ); 
     	texasExtension.send(ExternalConst.USER_DEAL, resObj , texasExtension.getParentRoom().getUserList());
     	

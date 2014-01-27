@@ -53,7 +53,7 @@ package module.gamepage
 				gameConnector.standUp();
 			});
 			var deal:TextField = createText("deal",function():void{
-				gameConnector.deal(-1);
+				gameConnector.deal(20);
 			});
 			
 			var exit:TextField = createText("exit",function():void{
