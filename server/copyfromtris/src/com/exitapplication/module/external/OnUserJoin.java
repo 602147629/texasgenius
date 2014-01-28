@@ -39,6 +39,7 @@ public class OnUserJoin extends BaseServerEventHandler {
 			UserSeatData userSeatData = playerArray.get(i);
 			playerData+="{";
 			playerData+="		\"fbuid\":\""+userSeatData.fbuid+"\",";
+			playerData+="		\"userId\":\""+userSeatData.user.getId()+"\",";
 			playerData+="		\"position\":\""+userSeatData.position+"\",";
 			playerData+="		\"dealValue\":\""+userSeatData.dealValue+"\",";
 			playerData+="		\"playerStatus\":"+userSeatData.playerStatus+",";

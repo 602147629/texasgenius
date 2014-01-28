@@ -127,12 +127,12 @@ package module.gamepage
 			
 			
 			// get current zone
-			if(gameConnector.sfs.currentZone == ServerConnector.ZONE_1 ){
+			if(gameConnector.sfs.currentZone == ServerConnector.ZONE_0 ){
+			}else if(gameConnector.sfs.currentZone == ServerConnector.ZONE_1 ){
 			}else if(gameConnector.sfs.currentZone == ServerConnector.ZONE_2 ){
 			}else if(gameConnector.sfs.currentZone == ServerConnector.ZONE_3 ){
 			}else if(gameConnector.sfs.currentZone == ServerConnector.ZONE_4 ){
 			}else if(gameConnector.sfs.currentZone == ServerConnector.ZONE_5 ){
-			}else if(gameConnector.sfs.currentZone == ServerConnector.ZONE_6 ){
 			}
 			
 		}

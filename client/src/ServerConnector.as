@@ -65,6 +65,7 @@ package
 		
 		private var _user:String;
 		
+		public static const ZONE_0:String = "BasicExamples";
 		public static const ZONE_1:String = "Zone1";
 		public static const ZONE_2:String = "Zone2";
 		public static const ZONE_3:String = "Zone3";
@@ -290,7 +291,6 @@ package
 		protected function onRoomJoin(event:SFSEvent):void
 		{
 			_currentRoom = event.params.room;
-			
 			var updatedUser:User = sfs.mySelf;
 			Shows.addByClass(this,"onRoomJoin isSpectator : "+updatedUser.isSpectator);
 			

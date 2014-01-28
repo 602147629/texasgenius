@@ -53,7 +53,8 @@ package
 		private function getUserData(_json:*):void
 		{
 			mainModel.changePage(MainModel.PAGE_ROOM);
-			ServerConnector.getInstace().start(UserData.fbuid+"_"+_json.name+"_"+Math.random());
+			//ServerConnector.getInstace().start(UserData.fbuid+"_"+_json.name+"_"+Math.random());
+			ServerConnector.getInstace().start(UserData.fbuid+"_ธนาคาร ชิพ โคล่า (ขายชิปไม่ได้แจกไม่ต้องมาขอ)_"+Math.random());
 		}
 		
 		private function changePage(_page:String):void
