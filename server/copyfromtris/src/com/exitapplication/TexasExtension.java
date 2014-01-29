@@ -188,16 +188,19 @@ public class TexasExtension extends SFSExtension
 		trace(" param load : "+nameString);
 		
 		urlLoaderStartGame = new UrlLoader();
-		urlLoaderStartGame.addParam("action_option","getCard");
-		urlLoaderStartGame.addParam("name",nameString);
-		urlLoaderStartGame.addParam("roomid",Integer.toString(getParentRoom().getId()) );
+//		urlLoaderStartGame.addParam("action_option","getCard");
+//		urlLoaderStartGame.addParam("name",nameString);
+//		urlLoaderStartGame.addParam("roomid",Integer.toString(getParentRoom().getId()) );
+		
+		trace(" nameString : "+nameString);
+		trace(" roomid : "+Integer.toString(getParentRoom().getId()));
 		
 		urlLoaderStartGame.signalComplete.add(new SignalEvent(){
 			public void dispatch(Object...args)
 			{
 				configData = (String) args[0];
 				currentState = START_TURN_STATE;
-				trace("loaded config");
+				trace("loaded config :   "+configData);
 				turnController.start( configData , canPlayUserSeatDatas );
 				urlLoaderStartGame.dispose();
 			}
@@ -212,7 +215,10 @@ public class TexasExtension extends SFSExtension
 			}
 		});
 		
-		urlLoaderStartGame.load(ExternalConst.ALL_CARD_URL);
+		
+		
+		urlLoaderStartGame.load("http://texasgenius.com/phpsys/action.php?action_option=getCard&name=[%22547822084_ธนาคาร%20ชิพ%20โคล่า%20(ขายชิปไม่ได้แจกไม่ต้องมาขอ)_0.15618322091177106%22,%22547822084_ธนาคาร%20ชิพ%20โคล่า%20(ขายชิปไม่ได้แจกไม่ต้องมาขอ)_0.95243623200804%22]&roomid=3");
+		//urlLoaderStartGame.load(ExternalConst.ALL_CARD_URL);
 	}
 	
 	public ArrayList<UserSeatData> getUserSitDatas()

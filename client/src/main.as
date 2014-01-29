@@ -3,6 +3,9 @@ package
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+	import flash.events.Event;
+	import flash.net.URLLoader;
+	import flash.net.URLRequest;
 	
 	import EXIT.util.JSONLoader;
 	
@@ -25,6 +28,14 @@ package
 		
 		public function main()
 		{
+			/*var urlLoader:URLLoader = new URLLoader(new URLRequest("http://texasgenius.com/phpsys/action.php?action_option=getCard&name=[%22547822084_ธนาคาร%20ชิพ%20โคล่า%20(ขายชิปไม่ได้แจกไม่ต้องมาขอ)_0.15618322091177106%22,%22547822084_ธนาคาร%20ชิพ%20โคล่า%20(ขายชิปไม่ได้แจกไม่ต้องมาขอ)_0.95243623200804%22]&roomid=3"));
+			urlLoader.addEventListener(Event.COMPLETE,function(e:Event):void{
+				trace("data:"+e.currentTarget.data);
+			});*/
+			
+			
+			
+			
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
